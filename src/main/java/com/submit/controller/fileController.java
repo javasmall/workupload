@@ -23,7 +23,7 @@ import java.util.Date;
 @Controller
 public class fileController {
 
-    private static  final Logger logger= LoggerFactory.getLogger(fileController.class);
+    private static  final Logger  logger= LoggerFactory.getLogger(fileController.class);
     @Autowired(required = false)
     jobMapper jobMapper;
     @Autowired(required = false)
