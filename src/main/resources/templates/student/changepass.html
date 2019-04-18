@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <header class="larry-personal-tit">
+            <span>修改密码</span>
+        </header><!-- /header -->
+        <div class="larry-personal-body clearfix">
+            <form class="layui-form col-lg-5" action="updatepassword" method="post">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username1"  autocomplete="off" class="layui-input layui-disabled"  disabled="disabled" th:value="${student.studentno}">
+                    </div>
+                </div>
+                <input type="hidden" name="username" th:value="${student.studentno}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name"  autocomplete="off" class="layui-input layui-disabled" th:value="${student.name}" disabled="disabled">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">旧密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="oldpassword"  autocomplete="off" class="layui-input"  placeholder="输入旧密码">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="newpassword"  autocomplete="off" class="layui-input" placeholder="输入新密码">
+                    </div>
+                </div>
+                <p th:text="${msg}" style="color: red" align="center"></p>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">修改</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{layui/layui.js}"></script>
+<script type="text/javascript">
+    // layui.use(['form','upload'],function(){
+    //     var form = layui.form();
+    //     layui.upload({
+    //         url: '' ,//上传接口
+    //         success: function(res){
+    //             //上传成功后的回调
+    //             console.log(res)
+    //         }
+    //     });
+    //
+    // });
+</script>
+</body>
+</html>

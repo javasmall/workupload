@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.submit.dao.timetableMapper" >
+  <resultMap id="BaseResultMap" type="com.submit.pojo.timetable" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="teachclassno" property="teachclassno" jdbcType="VARCHAR" />
+    <result column="weeks" property="weeks" jdbcType="VARCHAR" />
+    <result column="classroom" property="classroom" jdbcType="VARCHAR" />
+    <result column="day" property="day" jdbcType="SMALLINT" />
+    <result column="time" property="time" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, teachclassno, weeks, classroom, day, time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from timetable
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from timetable
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.submit.pojo.timetable" >
+    insert into timetable (no, teachclassno, weeks, 
+      classroom, day, time
+      )
+    values (#{no,jdbcType=BIGINT}, #{teachclassno,jdbcType=VARCHAR}, #{weeks,jdbcType=VARCHAR}, 
+      #{classroom,jdbcType=VARCHAR}, #{day,jdbcType=SMALLINT}, #{time,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.submit.pojo.timetable" >
+    insert into timetable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="teachclassno != null" >
+        teachclassno,
+      </if>
+      <if test="weeks != null" >
+        weeks,
+      </if>
+      <if test="classroom != null" >
+        classroom,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="teachclassno != null" >
+        #{teachclassno,jdbcType=VARCHAR},
+      </if>
+      <if test="weeks != null" >
+        #{weeks,jdbcType=VARCHAR},
+      </if>
+      <if test="classroom != null" >
+        #{classroom,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=SMALLINT},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.submit.pojo.timetable" >
+    update timetable
+    <set >
+      <if test="teachclassno != null" >
+        teachclassno = #{teachclassno,jdbcType=VARCHAR},
+      </if>
+      <if test="weeks != null" >
+        weeks = #{weeks,jdbcType=VARCHAR},
+      </if>
+      <if test="classroom != null" >
+        classroom = #{classroom,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        day = #{day,jdbcType=SMALLINT},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.submit.pojo.timetable" >
+    update timetable
+    set teachclassno = #{teachclassno,jdbcType=VARCHAR},
+      weeks = #{weeks,jdbcType=VARCHAR},
+      classroom = #{classroom,jdbcType=VARCHAR},
+      day = #{day,jdbcType=SMALLINT},
+      time = #{time,jdbcType=SMALLINT}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+</mapper>

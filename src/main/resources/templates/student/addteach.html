@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+                <span>我的课程</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+
+        <div class="larry-personal-body clearfix">
+            <table class="layui-table" id="demo" lay-filter="test">
+                <!--<colgroup>-->
+                    <!--<col width="150">-->
+                    <!--<col width="200">-->
+                    <!--<col>-->
+                <!--</colgroup>-->
+                <thead>
+                <tr>
+                    <th>课程号</th>
+                    <th>学期</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>类型</th>
+                    <th>教师</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lesson:${list}" >
+                    <td th:text="${lesson['teachclassno']}"></td>
+                    <td th:text="${lesson['coursesemester']}"></td>
+                    <td th:text="${lesson['coursename']}"></td>
+                    <td th:text="${lesson['credit']}"></td>
+                    <td th:text="${lesson['evalmethod']}"></td>
+                    <td th:text="${lesson['name']}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <!--<script type="text/html" id="barDemo">-->
+                <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+                <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+            <!--</script>-->
+
+
+        </div>
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+            <span>课程列表</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+        <div class="larry-personal-body clearfix">
+            <table class="layui-table" id="demo2" lay-filter="test">
+                <thead>
+                <tr>
+                    <th>课程号</th>
+                    <th>学期</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>类型</th>
+                    <th>教师</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lesson:${list1}" >
+                    <td th:text="${lesson['teachclassno']}"></td>
+                    <td th:text="${lesson['coursesemester']}"></td>
+                    <td th:text="${lesson['coursename']}"></td>
+                    <td th:text="${lesson['credit']}"></td>
+                    <td th:text="${lesson['evalmethod']}"></td>
+                    <td th:text="${lesson['name']}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{layui/jquery-2.2.1.min.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload','layedit','laydate','table'],function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,table=layui.table
+            ,laydate = layui.laydate;
+
+
+    });
+
+    //真的添加？
+    function alertcheckadd(obj) {
+        layer.confirm('真的添加课程么', function(index){
+            addinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    //真的删除？
+    function alertcheck(obj) {
+        layer.confirm('真的删除行么', function(index){
+           deleteinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    function addinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "addstuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+    }
+    function deleteinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "deletebystuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+
+    }
+</script>
+</body>
+</html>

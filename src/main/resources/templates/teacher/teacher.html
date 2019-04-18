@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>作业提交系统</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">作业提交</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">222222
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="">基本资料</a></dd>-->
+                    <!--<dd><a href="">安全设置</a></dd>-->
+                <!--</dl>-->
+            </li>
+            <li class="layui-nav-item"><a href="loginteacher.html">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">个人信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="changpassteacher" target="container">修改密码</a></dd>
+                        <dd><a href="" target="container">我的课程</a></dd>
+                        <dd><a href="" target="container">其他</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">作业管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="" target="container">课程发布</a></dd>
+                        <dd><a href="" target="container">作业发布</a></dd>
+                        <dd><a href="">作业查看</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">异常联系</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe src="https://baidu.com" name="container" width="100%" height="100%"></iframe>
+        <!--<div class="layui-tab" lay-allowClose="true">-->
+            <!--&lt;!&ndash;<ul class="layui-tab-title">&ndash;&gt;-->
+                <!--&lt;!&ndash;<li class="layui-this">网站设置</li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li>用户基本管理</li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li>权限分配</li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li>全部历史商品管理文字长一点试试</li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li>订单管理</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+            <!--<iframe src="index2.html" name="container" width="100%" height="100%"></iframe>-->
+        <!--</div>-->
+
+
+
+        <!--<iframe src="index2.html" name="container" width="100%" height="100%"></iframe>-->
+
+
+    </div>
+
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script th:src="@{layui/layui.js}"></script>
+<script th:src="@{layui/modules/jquery.js}"></script>
+<!--<script src="layui/main.js"></script>-->
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+
+
+        //触发事件
+        var active = {
+            tabAdd: function(){
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项'+ (Math.random()*1000|0) //用于演示
+                    ,content: '内容'+ (Math.random()*1000|0)
+                    ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(){
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

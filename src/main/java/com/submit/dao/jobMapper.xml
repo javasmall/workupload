@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.submit.dao.jobMapper" >
+  <resultMap id="BaseResultMap" type="com.submit.pojo.job" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="teachclassid" property="teachclassid" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="duedate" property="duedate" jdbcType="CHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, teachclassid, no, title, duedate, type, note, createTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from job
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from job
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.submit.pojo.job" >
+    insert into job (ID, teachclassid, no, 
+      title, duedate, type, 
+      note, createTime)
+    values (#{id,jdbcType=INTEGER}, #{teachclassid,jdbcType=INTEGER}, #{no,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{duedate,jdbcType=CHAR}, #{type,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.submit.pojo.job" >
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="teachclassid != null" >
+        teachclassid,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="duedate != null" >
+        duedate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teachclassid != null" >
+        #{teachclassid,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="duedate != null" >
+        #{duedate,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.submit.pojo.job" >
+    update job
+    <set >
+      <if test="teachclassid != null" >
+        teachclassid = #{teachclassid,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="duedate != null" >
+        duedate = #{duedate,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.submit.pojo.job" >
+    update job
+    set teachclassid = #{teachclassid,jdbcType=INTEGER},
+      no = #{no,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      duedate = #{duedate,jdbcType=CHAR},
+      type = #{type,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+                <span>我的课程</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+
+        <div class="larry-personal-body clearfix">
+
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{layui/jquery-2.2.1.min.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload','layedit','laydate','table'],function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,table=layui.table
+            ,laydate = layui.laydate;
+
+
+    });
+
+    //真的添加？
+    function alertcheckadd(obj) {
+        layer.confirm('真的添加课程么', function(index){
+            addinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    //真的删除？
+    function alertcheck(obj) {
+        layer.confirm('真的删除行么', function(index){
+           deleteinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    function addinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "addstuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+    }
+    function deleteinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "deletebystuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+
+    }
+</script>
+</body>
+</html>

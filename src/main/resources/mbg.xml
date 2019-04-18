@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 配置在逆向生成时不需要有他们默认的注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 配置数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://47.100.58.250:3306/recevie?useSSL=false"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 指定javabean生成的位置
+            targetPackage:在哪个包下生成
+            targetProject:在哪个工程下
+        -->
+        <javaModelGenerator targetPackage="com.submit.pojo"
+                            targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 指定sql映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="com.submit.dao"
+                         targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 指定到接口生成的位置 ，mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.submit.dao"
+                             targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!-- 指定每个表的生成策略  sql bean-->
+
+        <table tableName="job" domainObjectName="job" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="score" domainObjectName="score" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="student" domainObjectName="student" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="studentclass" domainObjectName="studentclass" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="teachclass" domainObjectName="teachclass" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="teacher" domainObjectName="teacher" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+        <table tableName="timetable" domainObjectName="timetable" selectByExampleQueryId="false"
+               enableUpdateByExample="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"></table>
+
+
+    </context>
+</generatorConfiguration>

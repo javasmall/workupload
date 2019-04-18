@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.submit.dao.studentclassMapper" >
+  <resultMap id="BaseResultMap" type="com.submit.pojo.studentclass" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="INTEGER" />
+    <result column="classID" property="classid" jdbcType="INTEGER" />
+    <result column="studentno" property="studentno" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, no, classID, studentno, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentclass
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from studentclass
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.submit.pojo.studentclass" >
+    insert into studentclass (ID, no, classID, 
+      studentno, note)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=INTEGER}, #{classid,jdbcType=INTEGER}, 
+      #{studentno,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.submit.pojo.studentclass" >
+    insert into studentclass
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="classid != null" >
+        classID,
+      </if>
+      <if test="studentno != null" >
+        studentno,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="studentno != null" >
+        #{studentno,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.submit.pojo.studentclass" >
+    update studentclass
+    <set >
+      <if test="no != null" >
+        no = #{no,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        classID = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="studentno != null" >
+        studentno = #{studentno,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.submit.pojo.studentclass" >
+    update studentclass
+    set no = #{no,jdbcType=INTEGER},
+      classID = #{classid,jdbcType=INTEGER},
+      studentno = #{studentno,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.submit.dao.teachclassMapper" >
+  <resultMap id="BaseResultMap" type="com.submit.pojo.teachclass" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="teachclassno" property="teachclassno" jdbcType="VARCHAR" />
+    <result column="coursename" property="coursename" jdbcType="VARCHAR" />
+    <result column="coursesemester" property="coursesemester" jdbcType="CHAR" />
+    <result column="credit" property="credit" jdbcType="TINYINT" />
+    <result column="evalmethod" property="evalmethod" jdbcType="CHAR" />
+    <result column="teacherno" property="teacherno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, teachclassno, coursename, coursesemester, credit, evalmethod, teacherno
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachclass
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teachclass
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.submit.pojo.teachclass" >
+    insert into teachclass (ID, teachclassno, coursename, 
+      coursesemester, credit, evalmethod, 
+      teacherno)
+    values (#{id,jdbcType=INTEGER}, #{teachclassno,jdbcType=VARCHAR}, #{coursename,jdbcType=VARCHAR}, 
+      #{coursesemester,jdbcType=CHAR}, #{credit,jdbcType=TINYINT}, #{evalmethod,jdbcType=CHAR}, 
+      #{teacherno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.submit.pojo.teachclass" >
+    insert into teachclass
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="teachclassno != null" >
+        teachclassno,
+      </if>
+      <if test="coursename != null" >
+        coursename,
+      </if>
+      <if test="coursesemester != null" >
+        coursesemester,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="evalmethod != null" >
+        evalmethod,
+      </if>
+      <if test="teacherno != null" >
+        teacherno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teachclassno != null" >
+        #{teachclassno,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesemester != null" >
+        #{coursesemester,jdbcType=CHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=TINYINT},
+      </if>
+      <if test="evalmethod != null" >
+        #{evalmethod,jdbcType=CHAR},
+      </if>
+      <if test="teacherno != null" >
+        #{teacherno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.submit.pojo.teachclass" >
+    update teachclass
+    <set >
+      <if test="teachclassno != null" >
+        teachclassno = #{teachclassno,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        coursename = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesemester != null" >
+        coursesemester = #{coursesemester,jdbcType=CHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=TINYINT},
+      </if>
+      <if test="evalmethod != null" >
+        evalmethod = #{evalmethod,jdbcType=CHAR},
+      </if>
+      <if test="teacherno != null" >
+        teacherno = #{teacherno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.submit.pojo.teachclass" >
+    update teachclass
+    set teachclassno = #{teachclassno,jdbcType=VARCHAR},
+      coursename = #{coursename,jdbcType=VARCHAR},
+      coursesemester = #{coursesemester,jdbcType=CHAR},
+      credit = #{credit,jdbcType=TINYINT},
+      evalmethod = #{evalmethod,jdbcType=CHAR},
+      teacherno = #{teacherno,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+
+</head>
+<body>
+
+<div class="layui-form-item">
+            <blockquote class="layui-elem-quote layui-text">
+            </blockquote>
+    <div class="layui-card-header" ><p align="center">作业提交（doc或docx文件）</p></div>
+
+<form name="myupload" id="myupload" class="layui-form" action="onfile" method="post" enctype='multipart/form-data'
+          style="margin-left: auto;margin-right: auto;text-align: center">
+
+        <!--3学科名称-->
+
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">科目类别：</label>
+                <div class="layui-input-block">
+                    <select name="lessonid"  id="lesson" lay-filter="lesson">
+                        <option th:each="lesson:${list}" th:value="${lesson.id}" th:text="${lesson.coursename}"></option>
+                    </select>
+                </div>
+            </div>
+    </div>
+     <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">实验名称：</label>
+            <div class="layui-input-block">
+                <!--<select name="lessonname" id="lessonname">-->
+                    <!--<option value="11" >te1</option>-->
+
+                <!--</select>-->
+                <select name="jobid"  id="lessonname" >
+                    <option th:each="lesson:${list}" th:value="${lesson.id}" th:text="${lesson.id}"></option>
+                    <option value="bigsai" >bigsai</option>
+                </select>
+            </div>
+        </div>
+    </div>
+        <div class="layui-upload">
+            <label id="lb"></label><br><!-- 展示文字名称-->
+            <input type="button" value="选取文件" class="layui-btn layui-btn-normal" onclick="getFile()">
+            <input style="display: none" type="file"  name="file" id="getF" onchange="clickF()">
+            <!--<button type="submit" class="layui-btn" id="test9" onclick="alert('正在上传，请稍后')">开始上传</button>-->
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        </div>
+    </form>
+            <div class="layui-form-mid layui-word-aux">此处演示</div>
+
+        </div>
+
+
+<script type="text/javascript" th:src="@{layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{layui/jquery-2.2.1.min.js}"></script>
+<script>
+//重新渲染
+    function renderForm(){
+        layui.use('form', function(){
+            var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+    function getFile(){
+        $("#getF").click();
+    }
+    var filename="";
+    function clickF() {
+        filename=$("#getF").val();
+        var filenames=filename.split("\\");
+        filename=filenames[filenames.length-1];
+        $("#lb").text(filename);
+
+    }
+    function filldate(json) {
+         $("#lessonname").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#lessonname").append(" <option value=\""+json[i].id+"\">"+json[i].title+"</option>");
+            console.log(json[i].title)
+        }
+        renderForm();
+    }
+    function getjobbyid()
+    {
+       // $("#lessonname").empty();
+        var id=$("#lesson").val();
+        $.ajax({
+            url: "getjobbyteachclassid",
+            type: "GET",
+            data: {
+             id:id,
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                filldate(data)
+            }
+
+        });
+    }
+    getjobbyid();
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field.file+"正在上传"));
+            var myform=document.getElementById("myupload");
+            var formdate=new FormData(myform);
+
+            $.ajax({
+                url: "onfile",
+                type: "POST",
+                data: formdate,
+                contentType: false,       //一定要写
+                processData: false,       //一定要写
+                traditional: true,//这里设置为true
+                success: function(data) {
+                    //do sth...
+                   layer.msg(JSON.stringify(data));
+                    console.log(data);
+                    //alert(data);
+                }
+
+            });
+            //执行实例
+            // $.post("onfile",data.field,function(res){
+            //     if(res.status){
+            //         layer.msg(res.info, {time: 2000});
+            //         // var url = "{:U('student/student_lists')}"; //
+            //         // setTimeout(window.location.href=url,2000);
+            //     }else{
+            //         layer.msg(res.info, {time: 2000});
+            //     }
+            // },'json');
+            return false;
+        });
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data){
+            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        form.on('select(lesson)', function(data){
+           getjobbyid();
+        });
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单初始赋值
+        form.val('example', {
+            "username": "贤心" // "name": "value"
+            ,"password": "123456"
+            ,"interest": 1
+            ,"like[write]": true //复选框选中状态
+            ,"close": true //开关状态
+            ,"sex": "man"
+            ,"desc": "我爱 bigsai"
+        })
+
+
+    });
+</script>
+</body>
+</html>

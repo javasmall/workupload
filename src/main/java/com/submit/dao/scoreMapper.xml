@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.submit.dao.scoreMapper" >
+  <resultMap id="BaseResultMap" type="com.submit.pojo.score" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="jobID" property="jobid" jdbcType="INTEGER" />
+    <result column="studentno" property="studentno" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, jobID, studentno, score, time, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from score
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.submit.pojo.score" >
+    insert into score (ID, jobID, studentno, 
+      score, time, note
+      )
+    values (#{id,jdbcType=BIGINT}, #{jobid,jdbcType=INTEGER}, #{studentno,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.submit.pojo.score" >
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="jobid != null" >
+        jobID,
+      </if>
+      <if test="studentno != null" >
+        studentno,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="jobid != null" >
+        #{jobid,jdbcType=INTEGER},
+      </if>
+      <if test="studentno != null" >
+        #{studentno,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.submit.pojo.score" >
+    update score
+    <set >
+      <if test="jobid != null" >
+        jobID = #{jobid,jdbcType=INTEGER},
+      </if>
+      <if test="studentno != null" >
+        studentno = #{studentno,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.submit.pojo.score" >
+    update score
+    set jobID = #{jobid,jdbcType=INTEGER},
+      studentno = #{studentno,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
