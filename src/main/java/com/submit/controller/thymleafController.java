@@ -83,6 +83,20 @@ public class thymleafController {
         return "teacher/changepassteacher";
     }
 
-
-
+    @GetMapping("teacherlesson")
+    public String teacherlesson(Model model,HttpServletRequest request)
+    {
+       List<teachclass>list= teacherService.getteachcassbyteacheridall((String) request.getSession().getAttribute("teacherid"));
+       model.addAttribute("list",list);
+        return "teacher/teacherlesson";
+    }
+    @GetMapping("editeachclass")
+    public String editeachclass(String classid,HttpServletRequest request,Model model)
+    {
+        teachclass teachclass=teacherService.getteachclassbyclassid(classid);
+        model.addAttribute("lesson",teachclass);
+        List<student>list=teacherService.gestudentbyclassid(Integer.parseInt(classid));
+        model.addAttribute("list",list);
+        return "teacher/editeachclass";
+    }
 }

@@ -20,8 +20,34 @@
         </blockquote>
 
         <div class="larry-personal-body clearfix">
+            <table class="layui-table" id="demo2" lay-filter="test">
+                <thead>
+                <tr>
+                    <th>课程号</th>
+                    <th>学期</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>类型</th>
+                    <th>ID</th>
+                    <th>操作</th>
 
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lesson:${list}" >
+                    <td th:text="${lesson.teachclassno}"></td>
+                    <td th:text="${lesson.coursesemester}"></td>
+                    <td th:text="${lesson.coursename}"></td>
+                    <td th:text="${lesson.credit}"></td>
+                    <td th:text="${lesson.evalmethod}"></td>
+                    <td th:text="${lesson.id}"></td>
+                    <td > <a th:href="'editeachclass?classid='+${lesson.id}"  class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
     </div>
 </section>
 <script type="text/javascript" th:src="@{layui/layui.js}"></script>

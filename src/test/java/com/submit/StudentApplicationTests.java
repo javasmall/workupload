@@ -2,6 +2,8 @@ package com.submit;
 
 import com.submit.dao.studentMapper;
 import com.submit.dao.teachclassMapper;
+import com.submit.pojo.teachclass;
+import com.submit.service.teacherService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,13 +18,24 @@ import java.util.*;
 @SpringBootTest
 public class StudentApplicationTests {
 
-//    Logger logger= LoggerFactory.getLogger(StudentApplicationTests.class);
-//    @Autowired(required = false)
-//    studentMapper studentMapper;
-//    @Autowired(required = false)
-//    private teachclassMapper teachclassMapepr;
+    Logger logger= LoggerFactory.getLogger(StudentApplicationTests.class);
+    @Autowired(required = false)
+    studentMapper studentMapper;
+    @Autowired(required = false)
+    private teachclassMapper teachclassMapepr;
+    @Autowired(required = false)
+    private teacherService teacherService;
     @Test
     public void contextLoads() {
+    }
+    @Test
+    public void  test3()
+    {
+        List<teachclass> list=teacherService.getteachcassbyteacherid("199800001483");
+        for(teachclass l:list)
+        {
+            logger.info(l.getCoursename()+" ");
+        }
     }
     @Test
     public void test2()

@@ -46,4 +46,7 @@ public interface teachclassMapper {
             "GROUP BY a.coursename,a.ID " +
             "ORDER BY a.coursesemester DESC")
     List<Map> getallclasslesson();
+
+    @Select("select * from teachclass where teacherno=#{teacherid} ORDER BY coursesemester DESC")
+    List<teachclass> getteacherclassbyteachid(String teacherid);
 }

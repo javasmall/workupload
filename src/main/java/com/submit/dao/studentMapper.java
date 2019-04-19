@@ -27,4 +27,9 @@ public interface studentMapper {
     //修改密码
     @Update("update student set password=#{password} where studentno=#{studentno}")
     boolean updatepassword(@Param("studentno") String studentno, @Param("password") String password);
+
+    @Select("SELECT b.studentno  studentno ,a.`name`,a.pinyin,a.password from student a,studentclass b " +
+            "WHERE a.studentno=b.studentno " +
+            "and b.classID=#{classid} ")
+    List<student> getstudentbyclassid(int classid);
 }

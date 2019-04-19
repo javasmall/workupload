@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 public class fileController {
@@ -78,4 +81,64 @@ public class fileController {
 
         return "上传成功";
     }
+    @PostMapping(value = "/download")
+    public String download(int lessonid, int jobid,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pat="fileget/"+lessonid+"/"+jobid;
+        String filename=request.getSession().getServletContext().getRealPath(pat);//专门创建一个fileget文件夹存取内容
+        response.setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session=request.getSession();
+        if(session.getAttribute("teacherid")==null)return null;
+        response.setContentType("text/html");
+
+        //设置文件MIME类型
+        response.setContentType(session.getServletContext().getMimeType(filename));
+        //设置Content-Disposition
+        response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes("utf-8"),"ISO8859_1"));
+
+        File file=new File(filename);
+        OutputStream out = response.getOutputStream();
+        ZipOutputStream zipout=new ZipOutputStream(out);
+
+        dozip(zipout,file,"");
+        zipout.close();
+        out.close();
+        return null;
+    }
+
+    private static void dozip(ZipOutputStream zipout, File file, String addpath) throws IOException {
+        if(file.isDirectory())
+        {
+            File f[]=file.listFiles();
+            for(int i=0;i<f.length;i++)
+            {
+                if(f[i].isDirectory()) {
+                    dozip(zipout, f[i], addpath+f[i].getName()+"/");
+                }
+                else {
+                    dozip(zipout, f[i], addpath+f[i].getName());
+                }
+            }
+        }
+        else
+        {
+            InputStream input;
+            BufferedInputStream buff;
+            zipout.putNextEntry(new ZipEntry(addpath+file.getName()));
+            input=new FileInputStream(file);
+            buff=new BufferedInputStream(input);
+            byte b[]=new byte[1024*5];
+            int a=0;
+            while((a=buff.read(b))!=-1)
+            {
+                zipout.write(b);
+            }
+            buff.close();
+            input.close();
+            System.out.println(file.getName());
+        }
+
+    }
+
+
 }
