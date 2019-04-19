@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+                <span>我的课程</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+        <form class="layui-form col-lg-5 " action="" method="post">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">教职号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username1"  autocomplete="off" class="layui-input layui-disabled"  disabled="disabled" th:value="${techerid}">
+                </div>
+            </div>
+            <input type="hidden" name="username" value="admin" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name"  autocomplete="off" class="layui-input layui-disabled" th:value="${techername}" disabled="disabled">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">旧密码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="oldpassword"  autocomplete="off" class="layui-input"  placeholder="输入旧密码">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="newpassword"  autocomplete="off" class="layui-input" placeholder="输入新密码">
+                </div>
+            </div>
+            <p  id="hint" th:text="${msg}" style="color: red" align="center"></p>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button  class="layui-btn" lay-submit lay-filter="updateteacher">修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="larry-personal-body clearfix">
+            <table class="layui-table" id="demo2" lay-filter="test">
+                <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>学期</th>
+                    <th>课程名</th>
+
+                    <th>操作</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="stu:${list}" >
+                    <td th:text="${stu.studentno}"></td>
+                    <td th:text="${stu.name}"></td>
+                    <td th:text="${stu.pinyin}"></td>
+
+                    <td >
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+<script type="text/javascript" th:src="@{layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{layui/jquery-2.2.1.min.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload','layedit','laydate','table'],function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,table=layui.table
+            ,laydate = layui.laydate;
+
+
+    });
+
+    //真的添加？
+    function alertcheckadd(obj) {
+        layer.confirm('真的添加课程么', function(index){
+            addinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    //真的删除？
+    function alertcheck(obj) {
+        layer.confirm('真的删除行么', function(index){
+           deleteinfo(obj);
+            layer.close(index);
+            //向服务端发送删除指令
+        });
+    }
+    function addinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "addstuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+    }
+    function deleteinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "deletebystuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
+
+        });
+
+    }
+</script>
+</body>
+</html>
