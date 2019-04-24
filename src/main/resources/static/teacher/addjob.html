@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+                <span>我的课程</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+        <form class="layui-form col-lg-5 " action="" method="post">
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">科目类别：</label>
+                    <div class="layui-input-block">
+                        <select name="lesson"  id="lesson" lay-filter="lessonname">
+                            <option  value="" ></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">序号(实验几)</label>
+                <div class="layui-input-block">
+                    <input type="text" name="no"  autocomplete="off" class="layui-input"   placeholder="1,2,3..">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">实验名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title"  autocomplete="off" class="layui-input" value="" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">截至日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="duedate" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">类型(数字)</label>
+                <div class="layui-input-block">
+                    <input type="text" name="type"  autocomplete="off" class="layui-input" placeholder="数字1，2..用于区分类型">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="note"  autocomplete="off" class="layui-input" value="">
+                </div>
+            </div>
+            <p  id="hint"  style="color: red" align="center"></p>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button  class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+        <div class="larry-personal-body clearfix">
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<!--<script type="text/javascript" src="../js/jquery.cookie.js"></script>-->
+<script type="text/javascript">
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //常规用法
+        laydate.render({
+            elem: '#test1',
+            trigger: 'click' //采用click弹出
+        });
+        });
+    layui.use(['form','upload','layedit','table'],function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,table=layui.table;
+        form.on('submit(formDemo)', function(data){
+            //执行实例
+            layer.confirm('真的添加？', function(index){
+                $.post("addjob",data.field,function(res){
+                    layer.msg(JSON.stringify(res));
+                    $("#hint").html(res);
+                });
+                layer.close(index);
+                //向服务端发送删除指令
+            });
+
+            return false;
+        });
+
+    });
+
+    function renderForm(){
+        layui.use('form', function(){
+            var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+
+
+    function filllesson(json) {
+        $("#lesson").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#lesson").append(" <option value=\""+json[i].id+"\">"+json[i].coursename+"</option>");
+        }
+        renderForm();
+    }
+    function getteachclass() {
+        // $("#lessonname").empty();
+        var id = $("#lesson").val();
+        $.ajax({
+            url: "getteacherclassthisterm",
+            type: "GET",
+            traditional: true,//这里设置为true
+            success: function (data) {
+                //do sth...
+                filllesson(data);
+            }
+        });
+    }
+    getteachclass();
+
+</script>
+</body>
+</html>

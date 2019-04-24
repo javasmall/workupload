@@ -4,6 +4,7 @@ import com.submit.pojo.studentclass;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface studentclassMapper {
@@ -19,6 +20,9 @@ public interface studentclassMapper {
 
     int updateByPrimaryKey(studentclass record);
 
-    @Delete("delete from studentclass where classID=#{stuclaid} and studentno=#{studentid}")
-    boolean deletebystuclaid(@Param("stuclaid") int stuclaid,@Param("studentid") String studentid);
+    @Delete("delete from studentclass where classID=#{teachclaid} and studentno=#{studentid}")
+    boolean deletebytwoid(@Param("teachclaid") int teachclaid,@Param("studentid") String studentid);
+
+    @Update("update studentclass set no=#{num} where id=#{stuclaid}")
+    boolean updatestuno(@Param("stuclaid") int stuclaid, @Param("num") int num);
 }

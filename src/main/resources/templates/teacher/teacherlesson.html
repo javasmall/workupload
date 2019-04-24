@@ -41,8 +41,8 @@
                     <td th:text="${lesson.credit}"></td>
                     <td th:text="${lesson.evalmethod}"></td>
                     <td th:text="${lesson.id}"></td>
-                    <td > <a th:href="'editeachclass?classid='+${lesson.id}"  class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></td>
+                    <td > <a th:href="'editeachclass?teachclassid='+${lesson.id}"  class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" th:stuclaid="${lesson.id}" onclick="alertcheck(this)">删除</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -101,10 +101,10 @@
     function deleteinfo(obj) {
         var obje=$(obj).attr('stuclaid');
         $.ajax({
-            url: "deletebystuclaid",
+            url: "teacher/deleteteachclassbyid",
             type: "POST",
             data: {
-                stuclaid:obje
+                id:obje
             },
             traditional: true,//这里设置为true
             success: function(data) {

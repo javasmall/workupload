@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+
+</head>
+<body>
+
+<div class="layui-form-item">
+            <blockquote class="layui-elem-quote layui-text">
+                查看作业提交情况
+            </blockquote>
+    <!--<div class="layui-card-header" ><p align="center">作业提交（doc或docx文件）</p></div>-->
+    <form name="myupload" id="getstudent" class="layui-form" action="../download" method="post" enctype='multipart/form-data'
+          style="margin-left: auto;margin-right: auto;text-align: center">
+
+        <!--3学科名称-->
+
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">科目类别：</label>
+                <div class="layui-input-block">
+                    <select name="lesson"  id="lesson" lay-filter="lessonname">
+                        <option  value="" ></option>
+                    </select>
+                </div>
+            </div>
+    </div>
+     <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">实验名称：</label>
+            <div class="layui-input-block">
+                <!--<select name="lessonname" id="lessonname">-->
+                    <!--<option value="11" >te1</option>-->
+
+                <!--</select>-->
+                <select name="job"  id="job" lay-filter="jobname">
+                    <option value="" ></option>
+                </select>
+            </div>
+        </div>
+    </div>
+        <div class="layui-upload">
+            <label id="lb"></label><br><!-- 展示文字名称-->
+            <button class="layui-btn" lay-submit lay-filter="formDemo">下载实验报告</button>
+        </div>
+</form>
+
+    <div class="larry-personal-body clearfix">
+        <table id="demo" lay-filter="demo"></table>
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
+<script>
+//重新渲染
+    function renderForm(){
+        layui.use('form', function(){
+            var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+
+    function filllesson(json) {
+         $("#lesson").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#lesson").append(" <option value=\""+json[i].id+"\">"+json[i].coursename+"</option>");
+            console.log(json[i].title)
+        }
+        renderForm();
+    }
+    function filltable() {
+        layui.use('table', function(){
+            var table = layui.table;//高版本建议把括号去掉，有的低版本，需要加()
+            table.render({
+                elem: '#demo'
+                ,url: 'getscorebyjobid' //数据接口
+                ,where:{'jobid':$("#job").val()}
+                ,page: false //开启分页
+                ,cols: [[ //表头
+                    {field: 'no', title: '序号',  sort: true, fixed: 'left',width:80}
+                    ,{field: 'name', title: '姓名',width:80}
+                    ,{field: 'studentno', title: '学号'}
+                    ,{field: 'classID', title: '作业班级代号'}
+                    ,{field: 'scoreid', title: '提交编号'}
+                    ,{field: 'time', title: '提交日期',  sort: true}
+                    ,{field: 'score', title: '评分', sort: true}
+                    ,{field: 'note', title: '备注'}
+                ]]
+            });
+            //监听单元格编辑
+            table.on('edit(demo)', function(obj){
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,field = obj.field; //得到字段
+                layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+            });
+        });
+    }
+    function filljob(json) {
+        $("#job").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#job").append(" <option value=\""+json[i].id+"\">"+json[i].title+"</option>");
+            console.log(json[i].title)
+        }
+        renderForm();
+        filltable();
+    }
+    function getteachclass()
+    {
+       // $("#lessonname").empty();
+        var id=$("#lesson").val();
+        $.ajax({
+            url: "getteacherclassthisterm",
+            type: "GET",
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                filllesson(data);
+                getjob();
+            }
+        });
+    }
+    function getjob()
+    {
+        var id=$("#lesson").val();
+        $.ajax({
+            url: "getjobbyteachclaid",
+            type: "GET",
+            data:{
+                'teacherclaid':id
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                filljob(data);
+            }
+        });
+    }
+    getteachclass();
+
+
+    layui.use(['form', 'layedit', 'laydate','table'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            , table = layui.table
+            ,laydate = layui.laydate;
+
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify("下载中，请稍后"));
+
+
+
+            // $.ajax({
+            //     url: "",
+            //     type: "GET",
+            //     data: formdate,
+            //     traditional: true,//这里设置为true
+            //     success: function(data) {
+            //         //do sth...
+            //        layer.msg(JSON.stringify(data));
+            //         console.log(data);
+            //         //alert(data);
+            //     }
+            // });
+            return true;
+        });
+
+        form.on('select(lessonname)', function(data){
+           getjob();
+        });
+        form.on('select(jobname)', function(data){
+            filltable();
+        });
+        //监听提交
+    });
+</script>
+</body>
+</html>

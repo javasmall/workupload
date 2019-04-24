@@ -81,9 +81,15 @@ public class fileController {
 
         return "上传成功";
     }
-    @PostMapping(value = "/download")
-    public String download(int lessonid, int jobid,HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String pat="fileget/"+lessonid+"/"+jobid;
+    @PostMapping(value = "/download")//teachclassid jobid
+    public String download(int lesson, int job,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pat="fileget/"+lesson+"/"+job;
+        String zipname="";
+        teachclass teachclass=teachclassMapper.selectByPrimaryKey(lesson);
+        job job1=jobMapper.selectByPrimaryKey(job);
+        zipname+=teachclass.getCoursename();
+        zipname+="实验"+job1.getNo()+job1.getTitle();
+        zipname+=".zip";
         String filename=request.getSession().getServletContext().getRealPath(pat);//专门创建一个fileget文件夹存取内容
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("UTF-8");
@@ -92,11 +98,13 @@ public class fileController {
         response.setContentType("text/html");
 
         //设置文件MIME类型
-        response.setContentType(session.getServletContext().getMimeType(filename));
+        response.setContentType(session.getServletContext().getMimeType(zipname));
         //设置Content-Disposition
-        response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes("utf-8"),"ISO8859_1"));
+        response.setHeader("Content-Disposition", "attachment;filename="+new String(zipname.getBytes("utf-8"),"ISO8859_1"));
 
         File file=new File(filename);
+        if(!file.exists()){file.mkdirs();}
+
         OutputStream out = response.getOutputStream();
         ZipOutputStream zipout=new ZipOutputStream(out);
 

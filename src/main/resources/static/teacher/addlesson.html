@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>个人信息</title>
 
-    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
-    <link rel="stylesheet" th:href="@{layui/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{layui/css/personal.css}">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
 
 </head>
 <body>
@@ -23,75 +22,50 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">课程号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="teachclassno"  autocomplete="off" class="layui-input"   th:value="${lesson.teachclassno}">
+                    <input type="text" name="teachclassno"  autocomplete="off" class="layui-input"   value="">
                 </div>
             </div>
-            <input type="hidden" name="id" th:value="${lesson.id}" >
             <div class="layui-form-item">
                 <label class="layui-form-label">课程名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="coursename"  autocomplete="off" class="layui-input" th:value="${lesson.coursename}" >
+                    <input type="text" name="coursename"  autocomplete="off" class="layui-input" value="" >
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">学期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="coursesemester"  autocomplete="off" class="layui-input"  th:value="${lesson.coursesemester}">
+                    <input type="text" name="coursesemester"  autocomplete="off" class="layui-input"  value="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">学分</label>
                 <div class="layui-input-block">
-                    <input type="text" name="credit"  autocomplete="off" class="layui-input" th:value="${lesson.credit}">
+                    <input type="text" name="credit"  autocomplete="off" class="layui-input" value="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">方式</label>
                 <div class="layui-input-block">
-                    <input type="text" name="evalmethod"  autocomplete="off" class="layui-input" th:value="${lesson.evalmethod}">
+                    <input type="text" name="evalmethod"  autocomplete="off" class="layui-input" value="">
                 </div>
             </div>
             <p  id="hint"  style="color: red" align="center"></p>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button  class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+                    <button  class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>
-
-
         <div class="larry-personal-body clearfix">
-            <table class="layui-table" id="demo2" lay-filter="test">
-                <thead>
-                <tr>
-                    <th>学号</th>
-                    <th>学期</th>
-                    <th>课程名</th>
-                    <th>序号</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="stu:${list}" >
-                    <td th:text="${stu['studentno']}"></td>
-                    <td th:text="${stu['name']}"></td>
-                    <td th:text="${stu['pinyin']}"></td>
-                    <td th:text="${stu['no']}"></td>
-                    <td >
-                        <a   class="layui-btn layui-btn-xs" th:stuclaid="${stu['ID']}" onclick="funchange(this)">序号修改</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="alertcheckdelete(this)">删除</a></td>
-                </tr>
-                </tbody>
-            </table>
         </div>
 
     </div>
 </section>
 
-<script type="text/javascript" th:src="@{layui/layui.js}"></script>
-<script type="text/javascript" th:src="@{layui/jquery-2.2.1.min.js}"></script>
-<script type="text/javascript" th:src="@{js/jquery.cookie.js}"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
 <script type="text/javascript">
     layui.use(['form','upload','layedit','laydate','table'],function(){
         var form = layui.form
@@ -101,8 +75,8 @@
             ,laydate = layui.laydate;
         form.on('submit(formDemo)', function(data){
             //执行实例
-            layer.confirm('真的进行修改么', function(index){
-                $.post("teacher/updatetechclass",data.field,function(res){
+            layer.confirm('真的添加？', function(index){
+                $.post("addtechclass",data.field,function(res){
                     layer.msg(JSON.stringify(res));
                     $("#hint").html(res);
                 });

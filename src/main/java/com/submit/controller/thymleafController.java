@@ -91,12 +91,14 @@ public class thymleafController {
         return "teacher/teacherlesson";
     }
     @GetMapping("editeachclass")
-    public String editeachclass(String classid,HttpServletRequest request,Model model)
+    public String editeachclass(String teachclassid,HttpServletRequest request,Model model)
     {
-        teachclass teachclass=teacherService.getteachclassbyclassid(classid);
+        teachclass teachclass=teacherService.getteachclassbyclassid(teachclassid);
         model.addAttribute("lesson",teachclass);
-        List<student>list=teacherService.gestudentbyclassid(Integer.parseInt(classid));
+        List<Map>list=teacherService.gestudentbyclassid(Integer.parseInt(teachclassid));
         model.addAttribute("list",list);
         return "teacher/editeachclass";
     }
+
+
 }

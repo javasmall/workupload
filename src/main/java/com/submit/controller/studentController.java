@@ -57,7 +57,7 @@ public class studentController {
             e.printStackTrace();
             model.addAttribute("msg","异常错误");
         }
-        return "changepass";
+        return "student/changepass";
     }
     @ResponseBody
     @GetMapping("getjobbyteachclassid")
@@ -65,16 +65,7 @@ public class studentController {
     {
         return studentService.getjobbyteacherclassid(Integer.parseInt(id));
     }
-    @ResponseBody
-    @PostMapping("deletebystuclaid")
-    public String deletebystuclaid(int stuclaid, HttpServletRequest request)
-    {
-        try {
-            studentService.deletebystuclaid(stuclaid,(String)request.getSession().getAttribute("studentid"));
-            return "删除成功";
-        }catch (Exception e)
-        {e.printStackTrace();return "删除失败";}
-    }
+
     @ResponseBody
     @PostMapping("addstuclaid")
     public String addstuclaid(int stuclaid,HttpServletRequest request)
@@ -87,6 +78,7 @@ public class studentController {
             return "插入失败";
         }
     }
+
 
 
 }

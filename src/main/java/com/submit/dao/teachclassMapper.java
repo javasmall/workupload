@@ -1,9 +1,7 @@
 package com.submit.dao;
 
 import com.submit.pojo.teachclass;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -49,4 +47,6 @@ public interface teachclassMapper {
 
     @Select("select * from teachclass where teacherno=#{teacherid} ORDER BY coursesemester DESC")
     List<teachclass> getteacherclassbyteachid(String teacherid);
+
+
 }

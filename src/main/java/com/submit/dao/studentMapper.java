@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface studentMapper {
@@ -28,8 +29,8 @@ public interface studentMapper {
     @Update("update student set password=#{password} where studentno=#{studentno}")
     boolean updatepassword(@Param("studentno") String studentno, @Param("password") String password);
 
-    @Select("SELECT b.studentno  studentno ,a.`name`,a.pinyin,a.password from student a,studentclass b " +
+    @Select("SELECT b.studentno  studentno ,a.`name`,a.pinyin,a.password,b.no,b.ID from student a,studentclass b " +
             "WHERE a.studentno=b.studentno " +
             "and b.classID=#{classid} ")
-    List<student> getstudentbyclassid(int classid);
+    List<Map> getstudentbyclassid(int classid);
 }

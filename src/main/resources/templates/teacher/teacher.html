@@ -36,19 +36,24 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">个人信息</a>
+                    <a class="" href="javascript:;">信息管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="changpassteacher" target="container">修改密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程管理</a>
+                    <dl class="layui-nav-child">
                         <dd><a href="teacherlesson" target="container">我的课程</a></dd>
-                        <dd><a href="" target="container">其他</a></dd>
+                        <dd><a href="teacher/addlesson.html" target="container">添加课程</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">作业管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="" target="container">课程发布</a></dd>
-                        <dd><a href="" target="container">作业发布</a></dd>
-                        <dd><a href="">作业查看</a></dd>
+                        <dd><a href="" target="container">作业管理</a></dd>
+                        <dd><a href="teacher/addjob.html" target="container">作业发布</a></dd>
+                        <dd><a href="teacher/showjob.html" target="container">作业查看</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">异常联系</a></li>
