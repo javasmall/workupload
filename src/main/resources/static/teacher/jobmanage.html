@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+</head>
+<body>
+<div class="layui-form-item">
+    <blockquote class="layui-elem-quote layui-text">
+        作业管理
+    </blockquote>
+    <form name="myupload" id="getstudent" class="layui-form" action="" method="post" style="margin-left: auto;margin-right: auto;text-align: center">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">科目类别：</label>
+                <div class="layui-input-block">
+                    <select name="lesson"  id="lesson" lay-filter="lessonname">
+                        <option  value="" ></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="larry-personal-body clearfix">
+        <table class="layui-hide"  id="demo" lay-filter="demo"></table>
+    </div>
+</div>
+
+</body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">右侧进行筛选导出</button>
+    </div>
+</script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+    //重新渲染
+    function renderForm(){
+        layui.use('form', function(){
+            var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+
+    function filllesson(json) {
+        $("#lesson").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#lesson").append(" <option value=\""+json[i].id+"\">"+json[i].coursename+"</option>");
+            console.log(json[i].title)
+        }
+        renderForm();
+    }
+
+    function getjob() {
+        layui.use('table', function(){
+            var table = layui.table;//高版本建议把括号去掉，有的低版本，需要加()
+            table.render({
+                elem: '#demo'
+                ,url: 'getjobbyteachclaid2' //数据接口
+                ,where:{'teacherclaid':$("#lesson").val()}
+                ,page: false //开启分页
+                ,toolbar: '#toolbarDemo'
+                ,cols: [[ //表头
+                    {field: 'id', title: 'ID',  sort: true, fixed: 'left',width:80}
+                    ,{field: 'teachclassid', title: '班号',width:80}
+                    ,{field: 'no', title: '序号(实验no)',edit:'text'}
+                    ,{field: 'title', title: '实验名' ,edit:'text'}
+                    ,{field: 'duedate', title: '截至日期',sort:true,edit:'text'}
+                    ,{field: 'type', title: '类型(1,2)',  sort: true,edit:'text'}
+                    ,{field: 'note', title: '备注',edit:'text',edit:'text'}
+                    ,{field: 'createTime', title: '创建时间', sort: true}
+                ]]
+            });
+            //头工具栏事件
+
+            //监听单元格编辑
+            table.on('edit(demo)', function(obj){
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,fieldva = obj.field; //得到字段
+
+                console.log('[ID: '+ data.scoreid +'] ' + fieldva + ' 字段更改为：'+ value);
+                $.ajax( {
+                    url:"",
+                    data:{
+                        'scoreid':data.scoreid,
+                        'score':data.score,
+                        'note':data.note,
+                    },
+
+                    method:'POST',
+                    success:function (msg) {
+                        layer.msg(msg)
+                    },
+                    error:function (msg) {
+                        layer.msg(msg)
+                    }
+
+                })
+            });
+        });
+
+    }
+    function getteachclass()
+    {
+        // $("#lessonname").empty();
+        var id=$("#lesson").val();
+        $.ajax({
+            url: "getteacherclassthisterm",
+            type: "GET",
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                filllesson(data);
+                getjob();
+            }
+        });
+    }
+    getteachclass();
+
+    layui.use(['form', 'layedit', 'laydate','table'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , table = layui.table
+            , laydate = layui.laydate;
+        form.on('select(lessonname)', function(data){
+            getjob();
+        });
+    })
+</script>
+</html>

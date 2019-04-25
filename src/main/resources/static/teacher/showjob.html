@@ -52,11 +52,15 @@
 </form>
 
     <div class="larry-personal-body clearfix">
-        <table id="demo" lay-filter="demo"></table>
+        <table class="layui-hide"  id="demo" lay-filter="demo"></table>
     </div>
 
 </div>
-
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">右侧进行筛选导出</button>
+    </div>
+</script>
 
 <script type="text/javascript" src="../layui/layui.js"></script>
 <script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
@@ -87,6 +91,7 @@
                 ,url: 'getscorebyjobid' //数据接口
                 ,where:{'jobid':$("#job").val()}
                 ,page: false //开启分页
+                ,toolbar: '#toolbarDemo'
                 ,cols: [[ //表头
                     {field: 'no', title: '序号',  sort: true, fixed: 'left',width:80}
                     ,{field: 'name', title: '姓名',width:80}
@@ -94,16 +99,36 @@
                     ,{field: 'classID', title: '作业班级代号'}
                     ,{field: 'scoreid', title: '提交编号'}
                     ,{field: 'time', title: '提交日期',  sort: true}
-                    ,{field: 'score', title: '评分', sort: true}
-                    ,{field: 'note', title: '备注'}
+                    ,{field: 'score', title: '评分', sort: true,edit:'text'}
+                    ,{field: 'note', title: '备注',edit:'text'}
                 ]]
             });
+            //头工具栏事件
+
             //监听单元格编辑
             table.on('edit(demo)', function(obj){
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
-                    ,field = obj.field; //得到字段
-                layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+                    ,fieldva = obj.field; //得到字段
+
+                console.log('[ID: '+ data.scoreid +'] ' + fieldva + ' 字段更改为：'+ value);
+                $.ajax( {
+                    url:"updatescorebyscoreid",
+                    data:{
+                        'scoreid':data.scoreid,
+                         'score':data.score,
+                        'note':data.note,
+                    },
+
+                    method:'POST',
+                    success:function (msg) {
+                        layer.msg(msg)
+                    },
+                    error:function (msg) {
+                        layer.msg(msg)
+                    }
+
+                })
             });
         });
     }

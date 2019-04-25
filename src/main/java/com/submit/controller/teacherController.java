@@ -148,6 +148,20 @@ public class teacherController {
         {e.printStackTrace();return null;}
     }
     @ResponseBody
+    @GetMapping("getjobbyteachclaid2")
+    public Map<String,Object>getjobbyteachclaid2(String teacherclaid,HttpServletRequest request)//给表格用
+    {
+        try {
+            List<job>list= teacherService.getjobbyteachclaid(Integer.parseInt(teacherclaid));
+            Map<String,Object>map=new ConcurrentHashMap<>();
+            map.put("code","0");
+            map.put("count",list.size());
+            map.put("data",list);
+            return map;
+        }catch (Exception e)
+        {e.printStackTrace();return null;}
+    }
+    @ResponseBody
     @PostMapping("addjob")
     public String addjob(String lesson,String no,String title,String duedate,int type,String note)
     {
@@ -181,6 +195,17 @@ public class teacherController {
        return map;
     }
 
+    @ResponseBody
+    @PostMapping("updatescorebyscoreid")
+    public String updatescorebyscoreid(String scoreid,String score,String note)
+    {
+        try {
+            teacherService.updatescorebyscoreid(scoreid,score,note);
+            return "修改成功";
+        }
+        catch (Exception e)
+        {e.printStackTrace();return "修改失败";}
+    }
     @ResponseBody
     @GetMapping("updatejobbyteachclaid")
     public String updatejobbyteachclaid(String ID,String no,String title,String duedate,String type)

@@ -130,7 +130,7 @@ public class teacherService {
             String xueqi = date.substring(10, 11);
             if ((Integer.parseInt(xueqi) == 2 && month < 8 && Integer.parseInt(dayear) == year - 1) || (Integer.parseInt(xueqi) == 2 && month > 8 && Integer.parseInt(dayear) == year)) {
                 list1.add(te);
-                logger.info(dayear + " " + xueqi);
+                logger.info(dayear + "  " + xueqi);
             }
         }
         return list1;
@@ -144,5 +144,13 @@ public class teacherService {
     @Transactional
     public void addjob(job job) {
         jobMapper.insertSelective(job);
+    }
+
+    public void updatescorebyscoreid(String scoreid, String score, String note) {
+        logger.info(scoreid+" "+score+" "+note);
+        score score1=scoreMapper.selectByPrimaryKey(Long.parseLong(scoreid));
+        if(score!=null&&!"".equals(score)){score1.setScore(Integer.parseInt(score));}
+        if(note!=null&&!"".equals(note)){score1.setNote(note);}
+        scoreMapper.updateByPrimaryKeySelective(score1);
     }
 }
