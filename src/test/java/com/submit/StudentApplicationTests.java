@@ -31,6 +31,7 @@ public class StudentApplicationTests {
     @Test
     public void  test3()
     {
+        Map<String,Object>map=new HashMap<>();
         List<teachclass> list=teacherService.getteachcassbyteacherid("199800001483");
         for(teachclass l:list)
         {

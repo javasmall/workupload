@@ -153,4 +153,9 @@ public class teacherService {
         if(note!=null&&!"".equals(note)){score1.setNote(note);}
         scoreMapper.updateByPrimaryKeySelective(score1);
     }
+
+    @Transactional
+    public void deletejobbyid(int id) {
+        jobMapper.deleteByPrimaryKey(id);
+    }
 }

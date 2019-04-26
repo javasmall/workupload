@@ -23,8 +23,10 @@
                 </div>
             </div>
         </div>
+
         <div class="layui-upload">
-            <button class="layui-btn" onclick="window.location.href('addjob.html')">创建作业</button>
+
+            <button class="layui-btn" >创建作业</button>
         </div>
 
     </form>
@@ -40,6 +42,10 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">右侧进行筛选导出</button>
     </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script type="text/javascript" src="../layui/layui.js"></script>
 <script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
@@ -79,7 +85,8 @@
                     ,{field: 'duedate', title: '截至日期',sort:true,edit:'text'}
                     ,{field: 'type', title: '类型(1,2)',  sort: true,edit:'text'}
                     ,{field: 'note', title: '备注',edit:'text',edit:'text'}
-                    ,{field: 'createTime', title: '创建时间', sort: true}
+                    ,{field: 'createtime', title: '创建时间', sort: true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                 ]]
             });
             //头工具栏事件
@@ -89,14 +96,18 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,fieldva = obj.field; //得到字段
-
+                console.log(data)
                 console.log('[ID: '+ data.scoreid +'] ' + fieldva + ' 字段更改为：'+ value);
+
                 $.ajax( {
-                    url:"",
+                    url:"updatejobbyteachclaid",
                     data:{
-                        'scoreid':data.scoreid,
-                        'score':data.score,
+                        'ID':data.id,
+                        'no':data.no,
+                        'type':data.type,
                         'note':data.note,
+                        'duedate':data.duedate,
+                        'title':data.title,
                     },
 
                     method:'POST',
@@ -108,6 +119,35 @@
                     }
 
                 })
+            });
+            table.on('tool(demo)', function(obj){
+                var data = obj.data;
+                console.log(obj)
+                if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        $.ajax({
+                            url:'deletejobbyid',
+                            data: {
+                            'id':data.id,
+                            },
+                            method:'POST',
+                            traditional: true,
+                            success:function (msg) {
+                                layer.msg(msg);
+                                obj.del();
+                            },
+                            error:function (msg) {
+                              layer.msg(msg)
+                            }
+
+
+
+                        })
+                        layer.close(index);
+                    });
+                } else if(obj.event === 'edit'){
+                   layer.msg(JSON.stringify("您可以直接单击单元格进行编辑"))
+                }
             });
         });
 

@@ -1,5 +1,7 @@
 package com.submit.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class job {
@@ -17,6 +19,8 @@ public class job {
 
     private String note;
 
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
 

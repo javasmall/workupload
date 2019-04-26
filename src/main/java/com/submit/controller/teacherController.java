@@ -207,8 +207,8 @@ public class teacherController {
         {e.printStackTrace();return "修改失败";}
     }
     @ResponseBody
-    @GetMapping("updatejobbyteachclaid")
-    public String updatejobbyteachclaid(String ID,String no,String title,String duedate,String type)
+    @PostMapping("updatejobbyteachclaid")
+    public String updatejobbyteachclaid(String ID,String no,String title,String duedate,String type,String note)
     {
         try {
             job job=teacherService.getjobbyid(ID);
@@ -216,6 +216,7 @@ public class teacherController {
             if(title!=null&&!"".equals(title)){job.setTitle(title);}
             if(duedate!=null&&!"".equals(duedate)){job.setDuedate(duedate);}
             if(type!=null&&!"".equals(type)){job.setType(Integer.parseInt(type));}
+            if(note!=null&&!"".equals(note)){job.setNote(note);}
             teacherService.updatejob(job);
             return "更新成功";
         }catch (Exception e)
@@ -276,6 +277,20 @@ public class teacherController {
     public String showworkupload()
     {
         return null;
+    }
+
+    @ResponseBody
+    @PostMapping("deletejobbyid")
+    public  String deletejobbyid(int id)
+    {
+        try {
+            teacherService.deletejobbyid(id);
+            return "删除成功";
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return "更改失败";
+        }
     }
 
 

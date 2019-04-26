@@ -1,5 +1,7 @@
 package com.submit.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class score {
@@ -11,6 +13,7 @@ public class score {
 
     private Integer score;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private String note;

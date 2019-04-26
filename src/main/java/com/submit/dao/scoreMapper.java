@@ -28,7 +28,8 @@ public interface scoreMapper {
     @Select("select * from score where jobID=#{jobID} and studentno=#{studentid}")
     score uniqueindex(@Param("jobID") Integer id,@Param("studentid") String studentid);
 
-    @Select("select e.name,d.* from(SELECT a.`no`,a.classID,a.studentno,b.ID scoreid,b.score,b.time,b.note " +
+    @Select("select e.name,d.* from(SELECT a.`no`,a.classID,a.studentno,b.ID scoreid,b.score," +
+            "DATE_FORMAT(b.time,'%Y-%m-%d %h:%m:%s') as time,b.note " +
             "from studentclass a " +
             "LEFT   JOIN  score b " +
             "on a.studentno=b.studentno " +
