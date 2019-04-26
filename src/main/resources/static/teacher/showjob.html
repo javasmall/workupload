@@ -86,12 +86,15 @@
     function filltable() {
         layui.use('table', function(){
             var table = layui.table;//高版本建议把括号去掉，有的低版本，需要加()
+            var name=$("#lesson").find("option:selected").text()+$("#job").find("option:selected").text();
+            console.log(name);
             table.render({
                 elem: '#demo'
                 ,url: 'getscorebyjobid' //数据接口
                 ,where:{'jobid':$("#job").val()}
                 ,page: false //开启分页
                 ,toolbar: '#toolbarDemo'
+                ,title:name
                 ,cols: [[ //表头
                     {field: 'no', title: '序号',  sort: true, fixed: 'left',width:80}
                     ,{field: 'name', title: '姓名',width:80}

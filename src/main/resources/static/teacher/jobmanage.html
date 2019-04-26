@@ -12,7 +12,7 @@
     <blockquote class="layui-elem-quote layui-text">
         作业管理
     </blockquote>
-    <form name="myupload" id="getstudent" class="layui-form" action="" method="post" style="margin-left: auto;margin-right: auto;text-align: center">
+    <form name="myupload" id="getstudent" class="layui-form" action="addjob.html" method="get" style="margin-left: auto;margin-right: auto;text-align: center">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">科目类别：</label>
@@ -23,7 +23,12 @@
                 </div>
             </div>
         </div>
+        <div class="layui-upload">
+            <button class="layui-btn" onclick="window.location.href('addjob.html')">创建作业</button>
+        </div>
+
     </form>
+
 
     <div class="larry-personal-body clearfix">
         <table class="layui-hide"  id="demo" lay-filter="demo"></table>
