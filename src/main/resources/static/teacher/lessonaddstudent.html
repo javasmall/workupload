@@ -15,7 +15,7 @@
             <span>我的课程</span>
             <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
         </blockquote>
-        <form class="layui-form col-lg-5 " action="" method="post">
+        <form class="layui-form col-lg-5 " action="" method="get" lay-filter="form">
 
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -28,20 +28,52 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">序号(实验几)</label>
-                <div class="layui-input-block">
-                    <input type="text" name="no"  autocomplete="off" class="layui-input"   placeholder="1,2,3..">
+                <div class="layui-inline">
+                    <label class="layui-form-label">添加方式：</label>
+                    <div class="layui-input-block">
+                        <select name="type"  id="type" lay-filter="type">
+                            <option  value="oneinsert" >单个插入</option>
+                            <option  value="moreinsert">批量插入</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">单选框</label>
+                <div class="layui-input-block">
+                    <input type="radio"  name="type" value="one" lay-filter="type" title="单个插入" >
+                    <input type="radio"  name="type" value="more" lay-filter="type" title="批量导入">
+
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">学号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="coursename"  autocomplete="off" class="layui-input" th:value="${lesson.coursename}" >
+                </div>
+            </div>
+            <button class="layui-btn">默认按钮</button>
         </form>
+
         <div class="larry-personal-body clearfix">
 <!--            UI填充造成视觉的效果！-->
+        </div>
+        <div class="larry-personal-body clearfix">
+            <table class="layui-hide"  id="demo" lay-filter="demo"></table>
         </div>
     </div>
 </section>
 
 </body>
-
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">右侧进行筛选导出</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script type="text/javascript" src="../layui/layui.js"></script>
 <script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" >
@@ -55,6 +87,85 @@
     function showstudent() {
         var lesson=$("#lesson").val();
         console.log(lesson);
+        layui.use('table', function(){
+            var table = layui.table;//高版本建议把括号去掉，有的低版本，需要加()
+            var name=$("#lesson").find("option:selected").text()+$("#job").find("option:selected").text();
+            console.log(name);
+            table.render({
+                elem: '#demo'
+                ,url: 'getstudentattendlesson' //数据接口
+                ,where:{'classid':$("#lesson").val()}
+                ,page: false //开启分页
+                ,toolbar: '#toolbarDemo'
+                ,title:name
+                ,cols: [[ //表头
+                    {field: 'id', title: 'ID',  sort: true, fixed: 'left',width:120}
+                    ,{field: 'name', title: '姓名'}
+                    ,{field:'pinyin',title:'pinyin'}
+                    ,{field: 'classid', title: '班级代号'}
+                    ,{field: 'studentno', title: '学号'}
+                    ,{field: 'no', title: '编号',edit:'text'}
+                   ,{field: 'note', title: '备注',edit:'text'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                ]]
+            });
+            //头工具栏事件
+
+            //监听单元格编辑
+            table.on('edit(demo)', function(obj){
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,fieldva = obj.field; //得到字段
+
+                console.log('[ID: '+ data.scoreid +'] ' + fieldva + ' 字段更改为：'+ value);
+                $.ajax( {
+                    url:"updatestudentclass",
+                    data:{
+                        'studentclassid':data.id,
+                        'no':data.no,
+                        'note':data.note,
+                    },
+
+                    method:'POST',
+                    success:function (msg) {
+                        layer.msg(msg)
+                    },
+                    error:function (msg) {
+                        layer.msg(msg)
+                    }
+
+                })
+            });
+            table.on('tool(demo)', function(obj){
+                var data = obj.data;
+                console.log(obj)
+                if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        $.ajax({
+                            url:'deletestuclassbyid',
+                            data: {
+                                'studentclassid':data.id,
+                            },
+                            method:'POST',
+                            traditional: true,
+                            success:function (msg) {
+                                layer.msg(msg);
+                                obj.del();
+                            },
+                            error:function (msg) {
+                                layer.msg(msg)
+                            }
+
+
+
+                        })
+                        layer.close(index);
+                    });
+                } else if(obj.event === 'edit'){
+                    layer.msg(JSON.stringify("您可直接编辑编号和备注"))
+                }
+            });
+        });
 
     }
 
@@ -82,7 +193,21 @@
             }
         });
     }
+
+    function reflash(data) {
+
+        if(data=='one')
+        {
+            alert(data)
+        }
+        else
+        {
+
+        }
+    }
+    reflash();
     getteachclass();
+
 
     layui.use(['form', 'layedit', 'laydate','table'], function() {
         var form = layui.form
@@ -92,6 +217,14 @@
             , laydate = layui.laydate;
         form.on('select(lessonname)', function(data){
             showstudent();
+        });
+        form.on('submit(form)',function(data){
+            return false;
+        });
+        form.on('radio(type)',function (data) {
+           console.log(data);
+           console.log(data.value);
+           reflash(data.value);
         });
     })
 </script>

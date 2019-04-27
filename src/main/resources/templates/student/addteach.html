@@ -134,26 +134,7 @@
 
         });
     }
-    function deleteinfo(obj) {
-        var obje=$(obj).attr('stuclaid');
-        $.ajax({
-            url: "deletebystuclaid",
-            type: "POST",
-            data: {
-                stuclaid:obje
-            },
-            traditional: true,//这里设置为true
-            success: function(data) {
-                //do sth...
-                layer.msg(JSON.stringify(data));
-                console.log(data);
-                window.location.reload();
-                //alert(data);
-            }
 
-        });
-
-    }
 </script>
 </body>
 </html>

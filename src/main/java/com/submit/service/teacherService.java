@@ -158,4 +158,20 @@ public class teacherService {
     public void deletejobbyid(int id) {
         jobMapper.deleteByPrimaryKey(id);
     }
+
+    public List<Map> getstudentbyclaid(String classid) {
+        return studentclassMapper.getstudentbyclaid(classid);
+    }
+
+    public studentclass getstudentclassbyid(String studentclassid) {
+        return studentclassMapper.selectByPrimaryKey(Integer.parseInt(studentclassid));
+    }
+
+    public boolean updatestudentclass(studentclass studentclass) {
+        return studentclassMapper.updateByPrimaryKeySelective(studentclass)>0;
+    }
+
+    public boolean deletestuclassbyid(int studentclassid) {
+        return studentclassMapper.deleteByPrimaryKey(studentclassid)>0;
+    }
 }

@@ -117,7 +117,27 @@
 
 
     });
+//从名单上删除这个小孩
+    function deleteinfo(obj) {
+        var obje=$(obj).attr('stuclaid');
+        $.ajax({
+            url: "deletebystuclaid",
+            type: "POST",
+            data: {
+                stuclaid:obje
+            },
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                layer.msg(JSON.stringify(data));
+                console.log(data);
+                window.location.reload();
+                //alert(data);
+            }
 
+        });
+
+    }
     function funchange(obj) {//修改花名册排名
 //页面层
         var stuclaid=$(obj).attr('stuclaid');
