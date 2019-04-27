@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加学生(学科)</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+            <span>我的课程</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+        <form class="layui-form col-lg-5 " action="" method="post">
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">科目类别：</label>
+                    <div class="layui-input-block">
+                        <select name="lesson"  id="lesson" lay-filter="lessonname">
+                            <option  value="" ></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">序号(实验几)</label>
+                <div class="layui-input-block">
+                    <input type="text" name="no"  autocomplete="off" class="layui-input"   placeholder="1,2,3..">
+                </div>
+            </div>
+        </form>
+        <div class="larry-personal-body clearfix">
+<!--            UI填充造成视觉的效果！-->
+        </div>
+    </div>
+</section>
+
+</body>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" >
+    function renderForm(){
+        layui.use('form', function(){
+            var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+
+    function showstudent() {
+        var lesson=$("#lesson").val();
+        console.log(lesson);
+
+    }
+
+    function filllesson(json) {
+        $("#lesson").empty();
+        for (var i=0;i<json.length;i++)
+        {
+            $("#lesson").append(" <option value=\""+json[i].id+"\">"+json[i].coursename+"</option>");
+            console.log(json[i].title)
+        }
+        renderForm();
+    }
+    function getteachclass()
+    {
+        // $("#lessonname").empty();
+        var id=$("#lesson").val();
+        $.ajax({
+            url: "getteacherclassthisterm",
+            type: "GET",
+            traditional: true,//这里设置为true
+            success: function(data) {
+                //do sth...
+                filllesson(data);
+                showstudent();
+            }
+        });
+    }
+    getteachclass();
+
+    layui.use(['form', 'layedit', 'laydate','table'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , table = layui.table
+            , laydate = layui.laydate;
+        form.on('select(lessonname)', function(data){
+            showstudent();
+        });
+    })
+</script>
+</html>

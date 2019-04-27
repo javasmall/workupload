@@ -59,22 +59,24 @@
                 </div>
             </div>
         </form>
-
+        <header class="larry-personal-tit">
+        <span>此页面暂不支持修改太多学生信息</span>
+        </header><!-- /header -->
 
         <div class="larry-personal-body clearfix">
             <table class="layui-table" id="demo2" lay-filter="test">
                 <thead>
                 <tr>
                     <th>学号</th>
-                    <th>学期</th>
-                    <th>课程名</th>
+                    <th>姓名</th>
+                    <th>拼音</th>
                     <th>序号</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="stu:${list}" >
-                    <td th:text="${stu['studentno']}"></td>
+                    <td th:text="${stu['studentno']}" ></td>
                     <td th:text="${stu['name']}"></td>
                     <td th:text="${stu['pinyin']}"></td>
                     <td th:text="${stu['no']}"></td>
