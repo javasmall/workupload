@@ -66,15 +66,13 @@ public class fileController {
 
             ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX, null, listener);
 
-            excelReader.read(new Sheet(1, 1, student.class));
-//            List<Object>list= listener.getDatas();
-//            for( Object student:list)
-//            {
-//               student  stu=(student)student;
-//                logger.info((stu).getName()+(stu.getPassword()));
-//            }
-
-
+            excelReader.read(new Sheet(1, 2, student.class));
+            List<Object>list= listener.getDatas();
+            for( Object student:list)
+            {
+               student  stu=(student)student;
+                logger.info(student.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -221,11 +219,12 @@ public class fileController {
         //可以通过实例获取该值
         private List<Object> datas = new ArrayList<Object>();
         public void invoke(Object object, AnalysisContext context) {
-            System.out.println("当前行："+context.getCurrentRowNum());
-            System.out.println(object);
+//            System.out.println("当前行："+context.getCurrentRowNum());
+//            System.out.println(object.toString());
             datas.add(object);//数据存储到list，供批量处理，或后续自己业务逻辑处理。
             doSomething(object);//根据自己业务做处理
         }
+
         private void doSomething(Object object) {
             //1、入库调用接口
         }

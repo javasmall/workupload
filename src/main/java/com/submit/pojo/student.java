@@ -3,7 +3,9 @@ package com.submit.pojo;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 
-public class student extends BaseRowModel {
+import java.io.Serializable;
+
+public class student extends BaseRowModel implements Serializable {
     @ExcelProperty(index = 0)
     private String studentno;
 
@@ -13,7 +15,7 @@ public class student extends BaseRowModel {
     @ExcelProperty(index = 2)
     private String pinyin;
 
-    @ExcelProperty(index = 4)
+    @ExcelProperty(index = 3)
     private String password;
 
     public String getStudentno() {
@@ -46,5 +48,9 @@ public class student extends BaseRowModel {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+    public String toString()
+    {
+        return "studentno:"+studentno+" name:"+name+" pinyin:"+pinyin+" password:"+password;
     }
 }
