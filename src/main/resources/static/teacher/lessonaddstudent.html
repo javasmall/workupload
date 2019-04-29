@@ -27,32 +27,68 @@
                     </div>
                 </div>
             </div>
+<!--            <div class="layui-form-item">-->
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">添加方式：</label>-->
+<!--                    <div class="layui-input-block">-->
+<!--                        <select name="type"  id="type" lay-filter="type">-->
+<!--                            <option  value="oneinsert" >单个插入</option>-->
+<!--                            <option  value="moreinsert">批量插入</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">添加方式：</label>
-                    <div class="layui-input-block">
-                        <select name="type"  id="type" lay-filter="type">
-                            <option  value="oneinsert" >单个插入</option>
-                            <option  value="moreinsert">批量插入</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">单选框</label>
+                <label class="layui-form-label">插入方式：</label>
                 <div class="layui-input-block">
-                    <input type="radio"  name="type" value="one" lay-filter="type" title="单个插入" >
+                    <input type="radio"  name="type" value="one" lay-filter="type" title="单个插入" checked="" >
                     <input type="radio"  name="type" value="more" lay-filter="type" title="批量导入">
 
                 </div>
             </div>
+            <div class="layui-form-item" id="oneadd"  >
+                <div class="layui-inline">
+                    <label class="layui-form-label">学号</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="studentid"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">(花名册)序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="studentno"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-form-item" id="moreadd" style="display: none" >
+                <div class="layui-inline">
+                    <label class="layui-form-label">起始学号</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="startid"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">截至学号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="endid"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">起始序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="startno"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+            </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">学号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="coursename"  autocomplete="off" class="layui-input" th:value="${lesson.coursename}" >
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
-            <button class="layui-btn">默认按钮</button>
+
         </form>
 
         <div class="larry-personal-body clearfix">
@@ -103,8 +139,8 @@
                     ,{field: 'name', title: '姓名'}
                     ,{field:'pinyin',title:'pinyin'}
                     ,{field: 'classid', title: '班级代号'}
-                    ,{field: 'studentno', title: '学号'}
-                    ,{field: 'no', title: '编号',edit:'text'}
+                    ,{field: 'studentno', title: '学号',sort: true}
+                    ,{field: 'no', title: '编号',edit:'text',sort:true}
                    ,{field: 'note', title: '备注',edit:'text'}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
                 ]]
@@ -138,7 +174,6 @@
             });
             table.on('tool(demo)', function(obj){
                 var data = obj.data;
-                console.log(obj)
                 if(obj.event === 'del'){
                     layer.confirm('真的删除行么', function(index){
                         $.ajax({
@@ -198,14 +233,17 @@
 
         if(data=='one')
         {
-            alert(data)
+            $("#oneadd").css("display","");
+            $("#moreadd").css("display","none");
+
         }
         else
         {
-
+            $("#oneadd").css("display","none");
+            $("#moreadd").css("display","");
         }
     }
-    reflash();
+
     getteachclass();
 
 
@@ -218,12 +256,29 @@
         form.on('select(lessonname)', function(data){
             showstudent();
         });
-        form.on('submit(form)',function(data){
+        form.on('submit(submit)',function(data){
+            layer.confirm('真的添加么?', function(index) {
+                layer.msg(JSON.stringify("正在插入,请稍等"));
+                $.ajax({
+                    url: 'lessonaddstudent',
+                    method: 'POST',
+                    traditional: true,
+                    data: data.field,
+                    success: function (msg) {
+                        layer.msg(msg);
+                        showstudent();
+                    },
+                    error: function (msg) {
+                        layer.msg(msg);
+                    }
+
+                });
+                layer.close(index);
+
+            });
             return false;
         });
         form.on('radio(type)',function (data) {
-           console.log(data);
-           console.log(data.value);
            reflash(data.value);
         });
     })

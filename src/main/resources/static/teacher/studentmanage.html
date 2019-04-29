@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>学生信息管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>学生添加(单个添加/批量添加)</legend>
+    <blockquote class="layui-elem-quote layui-text">
+        <span>批量上传对文件格式又要求,请按照要求对excel文件预处理</span>
+    </blockquote>
+</fieldset>
+<div class="larry-personal">
+    <form class="layui-form col-lg-5 " action="" method="post" id="addstudent">
+        <div class="layui-form-item">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-block">
+                <input type="text" name="studentno"  autocomplete="off" class="layui-input" placeholder="1622107022xx" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name"  autocomplete="off" class="layui-input" placeholder="张三" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">拼音</label>
+            <div class="layui-input-block">
+                <input type="text" name="pinyin"  autocomplete="off" class="layui-input"  placeholder="zhang1san1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password"  autocomplete="off" class="layui-input" placeholder="xxxxxx">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">批量上传</label>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+<!--                <button type="button" class="layui-btn" id="test9">开始上传</button>-->
+            </div>
+        </div>
+        <p  id="hint"  style="color: red" align="center"></p>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button  class="layui-btn" lay-submit lay-filter="formDemo" id="test9">添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="larry-personal-body clearfix">
+        <!--            UI填充造成视觉的效果！-->
+    </div>
+<!--        <div class="larry-personal-body clearfix">-->
+<!--            <table class="layui-hide"  id="demo" lay-filter="demo"></table>-->
+<!--        </div>-->
+</div>
+
+
+
+
+
+
+
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script>
+    layui.use(['upload','form'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , upload = layui.upload;
+        upload.render({
+            elem: '#test8'
+            // ,url: '/upload/'
+            , auto: false
+            ,accept:'file'
+             //,multiple: true
+            // ,bindAction: '#test9'
+            // ,done: function(res){
+            //     console.log(res)
+            //}
+        });
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify("正在解析上传,请稍后"));
+            var myform = document.getElementById("addstudent");
+            var formdate = new FormData(myform);
+            // console.log(formdate);
+
+            $.ajax({
+                url: "addstudent",
+                type: "POST",
+                data: formdate,
+                contentType: false,       //一定要写
+                processData: false,       //一定要写
+                traditional: true,//这里设置为true
+                success: function(data) {
+                    //do sth...
+                    layer.msg(JSON.stringify(data));
+                    console.log(data);
+                    //alert(data);
+                }
+
+            });
+            return false;
+        })
+       // 选完文件后不自动上传
+    });
+
+</script>
+</html>

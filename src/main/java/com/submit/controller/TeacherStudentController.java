@@ -93,23 +93,23 @@ public class TeacherStudentController {
             return "插入失败";
         }
     }
-    @GetMapping("lessonaddstudent")
-    public String lessonaddstudent(String teachclaid,String studentno,String no,String note)
-    {
-        try {
-            studentclass studentclass = new studentclass();
-            studentclass.setClassid(Integer.parseInt(teachclaid));
-            studentclass.setStudentno(studentno);
-            if(no!=null&&!"".equals(no))studentclass.setNo(Integer.parseInt(no));
-            if(note!=null&&!"".equals(note))studentclass.setNote(note);
-            teacherService.lessonaddstudent(studentclass);
-            return "插入成功";
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-            return "添加失败";
-        }
-    }
+//    @GetMapping("lessonaddstudent")
+//    public String lessonaddstudent(String teachclaid,String studentno,String no,String note)
+//    {
+//        try {
+//            studentclass studentclass = new studentclass();
+//            studentclass.setClassid(Integer.parseInt(teachclaid));
+//            studentclass.setStudentno(studentno);
+//            if(no!=null&&!"".equals(no))studentclass.setNo(Integer.parseInt(no));
+//            if(note!=null&&!"".equals(note))studentclass.setNote(note);
+//            teacherService.lessonaddstudent(studentclass);
+//            return "插入成功";
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            return "添加失败";
+//        }
+//    }
 
     @PostMapping("deletestuclassbytwoid")
     public String deletestuclassbytwoid(int teachclassid, String studentno)
@@ -171,6 +171,27 @@ public class TeacherStudentController {
         {
             e.printStackTrace();return "更新失败";
         }
+    }
+
+    @ResponseBody
+    @PostMapping("lessonaddstudent")
+    public String lessonaddstudent(String lesson,String startid,String endid,String startno,String studentid,String studentno,String type)
+    {
+        if(type.equals("one"))
+        {
+            try {
+                return teacherService.lessonaddstudent(lesson, studentid, studentno);
+            }catch (Exception e){
+                e.printStackTrace();return "插入失败";
+            }
+        }
+        else if(type.equals("more"))
+        {
+            try {
+                return teacherService.lessonaddstudentmore(lesson, startid, endid, startno);
+            }catch (Exception e){e.printStackTrace();return "异常错误";}
+        }
+        return "参数错误";
     }
 
 

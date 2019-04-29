@@ -1,12 +1,19 @@
 package com.submit.pojo;
 
-public class student {
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.metadata.BaseRowModel;
+
+public class student extends BaseRowModel {
+    @ExcelProperty(index = 0)
     private String studentno;
 
+    @ExcelProperty(index = 1)
     private String name;
 
+    @ExcelProperty(index = 2)
     private String pinyin;
 
+    @ExcelProperty(index = 4)
     private String password;
 
     public String getStudentno() {

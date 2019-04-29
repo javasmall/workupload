@@ -12,7 +12,7 @@ public interface studentclassMapper {
 
     int insert(studentclass record);
 
-    int insertSelective(studentclass record);
+    boolean insertSelective(studentclass record);
 
     studentclass selectByPrimaryKey(Integer id);
 

@@ -1,10 +1,16 @@
 package com.submit.controller;
 
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.read.context.AnalysisContext;
+import com.alibaba.excel.read.event.AnalysisEventListener;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.submit.dao.jobMapper;
 import com.submit.dao.scoreMapper;
 import com.submit.dao.teachclassMapper;
 import com.submit.pojo.job;
 import com.submit.pojo.score;
+import com.submit.pojo.student;
 import com.submit.pojo.teachclass;
 
 import org.slf4j.Logger;
@@ -19,20 +25,72 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 
 @Controller
 public class fileController {
 
-    private static  final Logger  logger= LoggerFactory.getLogger(fileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(fileController.class);
     @Autowired(required = false)
     jobMapper jobMapper;
     @Autowired(required = false)
     teachclassMapper teachclassMapper;
     @Autowired(required = false)
     scoreMapper scoreMapper;
+
+    @ResponseBody
+    @PostMapping("teacher/addstudent")
+    public String teacheraddstudent(MultipartFile file, String name, String pinyin, String password, String studentno) throws IOException {
+
+        logger.info(studentno + " " + name + " " + password + " " + pinyin);
+        logger.info(file.getOriginalFilename());
+        File file1 = new File(file.getOriginalFilename());
+        if(!file1.exists()){file1.createNewFile();}
+        OutputStream out=new FileOutputStream(file1);
+        out.write(file.getBytes());
+        out.close();
+
+        InputStream inputStream=null;
+        try {
+            // 解析每行结果在listener中处理
+            ExcelListener listener = new ExcelListener();
+            inputStream =new FileInputStream(file1);
+
+            ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX, null, listener);
+
+            excelReader.read(new Sheet(1, 1, student.class));
+//            List<Object>list= listener.getDatas();
+//            for( Object student:list)
+//            {
+//               student  stu=(student)student;
+//                logger.info((stu).getName()+(stu.getPassword()));
+//            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "成功";
+    }
+
+
+
+
     @ResponseBody
     @PostMapping("onfile")
     public String onfile(MultipartFile file,int lessonid, int jobid, HttpServletRequest request) throws IOException {
@@ -146,6 +204,40 @@ public class fileController {
             System.out.println(file.getName());
         }
 
+    }
+
+
+    /* 解析监听器，
+     * 每解析一行会回调invoke()方法。
+     * 整个excel解析结束会执行doAfterAllAnalysed()方法
+     *
+     * 下面只是我写的一个样例而已，可以根据自己的逻辑修改该类。
+     * @author jipengfei
+     * @date 2017/03/14
+     */
+   public static class ExcelListener extends AnalysisEventListener {
+
+        //自定义用于暂时存储data。
+        //可以通过实例获取该值
+        private List<Object> datas = new ArrayList<Object>();
+        public void invoke(Object object, AnalysisContext context) {
+            System.out.println("当前行："+context.getCurrentRowNum());
+            System.out.println(object);
+            datas.add(object);//数据存储到list，供批量处理，或后续自己业务逻辑处理。
+            doSomething(object);//根据自己业务做处理
+        }
+        private void doSomething(Object object) {
+            //1、入库调用接口
+        }
+        public void doAfterAllAnalysed(AnalysisContext context) {
+            // datas.clear();//解析结束销毁不用的资源
+        }
+        public List<Object> getDatas() {
+            return datas;
+        }
+        public void setDatas(List<Object> datas) {
+            this.datas = datas;
+        }
     }
 
 

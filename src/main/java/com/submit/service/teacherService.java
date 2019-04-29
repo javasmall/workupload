@@ -50,7 +50,7 @@ public class teacherService {
             String xueqi=date.substring(10,11);
             if((Integer.parseInt(xueqi)==2&&month<8&&Integer.parseInt(dayear)==year-1)||(Integer.parseInt(xueqi)==2&&month>8&&Integer.parseInt(dayear)==year)){
                 list1.add(teachclass);
-                logger.info(dayear+" "+xueqi);
+                logger.info(dayear+"   "+xueqi);
             }
         }
         return list1;
@@ -106,10 +106,6 @@ public class teacherService {
 
     public void addstudentuser(student student) {
         studentMapper.insertSelective(student);
-    }
-
-    public void lessonaddstudent(studentclass studentclass) {
-        studentclassMapper.insertSelective(studentclass);
     }
 
     @Transactional
@@ -173,5 +169,50 @@ public class teacherService {
 
     public boolean deletestuclassbyid(int studentclassid) {
         return studentclassMapper.deleteByPrimaryKey(studentclassid)>0;
+    }
+
+    @Transactional
+    public String lessonaddstudent(String lesson, String studentid, String studentno) {
+        studentclass studentclass=new studentclass();
+        student student=studentMapper.selectByPrimaryKey(studentid);
+        if(student==null){return "不存在该学生,请核实名单";}
+        studentclass.setStudentno(studentid);
+        studentclass.setNo(Integer.parseInt(studentno));
+        studentclass.setClassid(Integer.parseInt(lesson));
+        studentclassMapper.insertSelective(studentclass);
+        return "插入成功";
+    }
+
+    public String lessonaddstudentmore(String lesson, String startid, String endid, String startno) {
+        studentclass studentclass=new studentclass();
+        int succuss=0;int fail=0;int startnum=Integer.parseInt(startno);
+        long startstudentid=Long.parseLong(startid);
+        long endstudentid=Long.parseLong(endid);
+
+        for(long id=startstudentid;id<=endstudentid;id++,startnum++) {
+            try {
+                student student = studentMapper.selectByPrimaryKey(String.valueOf(id));
+                if (student == null) {
+                    fail++;
+                    startnum--;
+                } else {
+                    studentclass.setStudentno(String.valueOf(id));
+                    studentclass.setNo(startnum);
+                    studentclass.setClassid(Integer.parseInt(lesson));
+                    if (studentclassMapper.insertSelective(studentclass)) {
+                        succuss++;
+                    } else {
+                        fail++;
+                        startnum--;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                fail++;
+                startnum--;
+            }
+        }
+        return "插入成功数据"+succuss+"条,插入失败数据"+fail+"条,详情请看具体数据";
+
     }
 }
