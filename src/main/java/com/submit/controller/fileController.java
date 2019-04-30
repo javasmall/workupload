@@ -13,6 +13,7 @@ import com.submit.pojo.score;
 import com.submit.pojo.student;
 import com.submit.pojo.teachclass;
 
+import com.submit.service.teacherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -45,6 +44,8 @@ public class fileController {
     teachclassMapper teachclassMapper;
     @Autowired(required = false)
     scoreMapper scoreMapper;
+    @Autowired(required = false)
+    teacherService teacherService;
 
     @ResponseBody
     @PostMapping("teacher/addstudent")
@@ -52,41 +53,60 @@ public class fileController {
 
         logger.info(studentno + " " + name + " " + password + " " + pinyin);
         logger.info(file.getOriginalFilename());
-        File file1 = new File(file.getOriginalFilename());
-        if(!file1.exists()){file1.createNewFile();}
-        OutputStream out=new FileOutputStream(file1);
-        out.write(file.getBytes());
-        out.close();
-
         InputStream inputStream=null;
-        try {
-            // 解析每行结果在listener中处理
-            ExcelListener listener = new ExcelListener();
-            inputStream =new FileInputStream(file1);
-
-            ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX, null, listener);
-
-            excelReader.read(new Sheet(1, 2, student.class));
-            List<Object>list= listener.getDatas();
-            for( Object student:list)
-            {
-               student  stu=(student)student;
-                logger.info(student.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
+        int success=0;int fail=0;
+        if(file==null)
+        {
             try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            student student=new student();
+            student.setName(name);student.setPassword(password);student.setStudentno(studentno);student.setPinyin(pinyin);
+            teacherService.addstudentuser(student);success++;}
+            catch (Exception e)
+            {
+                e.printStackTrace();fail++;
             }
         }
-        return "成功";
+        else {
+            try {
+                // 解析每行结果在listener中处理
+                ExcelListener listener = new ExcelListener();
+                inputStream = file.getInputStream();
+
+                ExcelTypeEnum typeEnum = null;
+                if (file.getOriginalFilename().contains("xlsx"))
+                    typeEnum = ExcelTypeEnum.XLSX;
+                else if (file.getOriginalFilename().contains("xls"))
+                    typeEnum = ExcelTypeEnum.XLS;
+
+                ExcelReader excelReader = new ExcelReader(inputStream, typeEnum, null, listener);
+
+                excelReader.read(new Sheet(1, 2, student.class));
+                List<Object> list = listener.getDatas();
+                for (Object student : list) {
+                    student stu = (student) student;
+                    try {
+                        teacherService.addstudentuser(stu);
+                        success++;
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();fail++;
+                    }
+                    logger.info(student.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "您成功插入:"+success+"条数据,插入失败:"+fail+"条数据";
     }
-
-
 
 
     @ResponseBody

@@ -39,6 +39,7 @@ public class ShiroConfig {
 		 *       role: 该资源必须得到角色权限才可以访问
 		 */
 		Map<String,String> filterMap = new LinkedHashMap<String,String>();
+		filterMap.put("/druid/**","anon");
 		filterMap.put("/css/**", "anon");
 		filterMap.put("/js/**", "anon");
 		filterMap.put("/layui/**", "anon");
