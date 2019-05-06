@@ -1,9 +1,7 @@
 package com.submit.controller;
 
-import com.submit.dao.studentMapper;
 import com.submit.pojo.job;
 import com.submit.pojo.student;
-import com.submit.service.studentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ public class studentController {
 
     Logger logger= LoggerFactory.getLogger(studentController.class);
     @Autowired(required = false)
-    studentMapper studentMapper;
+    com.submit.dao.studentMapper studentMapper;
     @Autowired(required = false)
-    studentService studentService;
+    com.submit.service.studentService studentService;
 
     @ResponseBody
     @GetMapping("tt")

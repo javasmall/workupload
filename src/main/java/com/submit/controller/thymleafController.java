@@ -1,11 +1,8 @@
 package com.submit.controller;
 
-import com.submit.dao.studentMapper;
 import com.submit.pojo.student;
 import com.submit.pojo.teachclass;
 import com.submit.pojo.teacher;
-import com.submit.service.studentService;
-import com.submit.service.teacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +15,11 @@ import java.util.Map;
 @Controller
 public class thymleafController {
     @Autowired(required = false)
-    studentMapper studentMapper;
+    com.submit.dao.studentMapper studentMapper;
     @Autowired(required = false)
-    studentService studentService;
+    com.submit.service.studentService studentService;
     @Autowired(required = false)
-    teacherService teacherService;
+    com.submit.service.teacherService teacherService;
 
     @GetMapping("student")
     public String index(Model model, HttpServletRequest request)
