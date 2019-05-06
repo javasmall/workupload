@@ -5,13 +5,16 @@ Source Server         : localhost_3306
 Source Server Version : 80011
 Source Host           : localhost:3306
 Source Database       : recevie
-
+githubadress: https://github.com/javasmall/workupload
 Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
 Date: 2019-05-06 17:22:00
 */
+CREATE DATABASE recevie;
+USE recevie;
+
 
 SET FOREIGN_KEY_CHECKS=0;
 
