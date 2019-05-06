@@ -215,4 +215,16 @@ public class teacherService {
         return "插入成功数据"+succuss+"条,插入失败数据"+fail+"条,详情请看具体数据";
 
     }
+
+    public void addteacher(teacher teacher) {
+        teacherMapper.insertSelective(teacher);
+    }
+
+    public List<teacher> getAllTeacher() {
+        return teacherMapper.getAllTeacher();
+    }
+
+    public void deleteteacherbyid(String teacherno) {
+     teacherMapper.deleteByPrimaryKey(teacherno);
+    }
 }

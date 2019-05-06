@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +82,7 @@ public class fileController {
 
                 ExcelReader excelReader = new ExcelReader(inputStream, typeEnum, null, listener);
 
-                excelReader.read(new Sheet(1, 2, student.class));
+                excelReader.read(new Sheet(1, 1, student.class));
                 List<Object> list = listener.getDatas();
                 for (Object student : list) {
                     student stu = (student) student;
@@ -111,22 +113,37 @@ public class fileController {
 
     @ResponseBody
     @PostMapping("onfile")
-    public String onfile(MultipartFile file,int lessonid, int jobid, HttpServletRequest request) throws IOException {
+    public String onfile(MultipartFile file,int lessonid, int jobid, HttpServletRequest request) throws IOException, ParseException {
         //lessonid :teachclass jsp,安卓等信息的 id
         //jobid: jdbc,登录实验名称的 id
         // String pat="fileget/"+lessonid+"/"+jobid+"/";
+        boolean isovertime=false;
+
         HttpSession session=request.getSession();
         if(file==null||!file.getOriginalFilename().contains("doc")){return "请选择正确文件";}
 
         job job=jobMapper.selectByPrimaryKey(jobid);
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lessonid);
         score score=scoreMapper.uniqueindex(job.getId(),(String)session.getAttribute("studentid"));
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+
+        //判断是否超时
+        Date endday=  sdf.parse(job.getDuedate());
+        Date now=new Date();
+        if(endday.compareTo(now)<0)//超时
+        {
+            isovertime=true;
+        }
+
 
 
         logger.info(job.getTitle()+" "+job.getNo()+" "+job.getDuedate());
         logger.info(teachclass.getCoursename()+" "+teachclass.getTeachclassno());
 
-        String pat="fileget/"+lessonid+"/"+jobid+"/";
+        String pat="";
+        //if(isovertime)pat="fileget/overtime/"+lessonid+"/"+jobid+"/";
+        //else
+        pat="fileget/"+lessonid+"/"+jobid+"/";
         String path=request.getSession().getServletContext().getRealPath(pat);//专门创建一个fileget文件夹存取内容
         File file2=new File(path);
         if(!file2.exists())//不存在就新建文件夹
@@ -155,11 +172,23 @@ public class fileController {
             scoreMapper.updateByPrimaryKeySelective(score);
         }
 
+        if(isovertime)return "作业已超时，您已补交成功";
         return "上传成功";
     }
     @PostMapping(value = "/download")//teachclassid jobid
     public String download(int lesson, int job,HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String pat="fileget/"+lesson+"/"+job;
+       return downloadzip(false,lesson,job,request,response);
+    }
+
+    //用于判断超时
+    @PostMapping("/downloadovertime")
+    public String downloadovertme(int lesson, int job,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return downloadzip(true,lesson,job,request,response);
+    }
+    public String downloadzip(boolean isover,int lesson, int job,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pat="";
+        if(isover)pat="fileget/overtime/"+lesson+"/"+job;
+        else pat="fileget/"+lesson+"/"+job;
         String zipname="";
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lesson);
         job job1=jobMapper.selectByPrimaryKey(job);
@@ -189,7 +218,6 @@ public class fileController {
         out.close();
         return null;
     }
-
     private static void dozip(ZipOutputStream zipout, File file, String addpath) throws IOException {
         if(file.isDirectory())
         {

@@ -33,4 +33,7 @@ public interface studentMapper {
             "WHERE a.studentno=b.studentno " +
             "and b.classID=#{classid} ")
     List<Map> getstudentbyclassid(int classid);
-}
+
+    @Select("select * from student where studentno like CONCAT('%',#{studentid},'%') and name like CONCAT('%',#{name},'%')")
+    List<student> getallstudent(@Param("studentid")String studentid,@Param("name")String name);
+}/**/

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师信息管理</title>
+    <title>学生信息管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/bootstrap.css">
+    <link rel="stylesheet" href="../layui/css/personal.css">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>教师添加</legend>
+</fieldset>
+<div class="larry-personal">
+    <form class="layui-form col-lg-5 " action="" method="post" id="addteacher">
+        <div class="layui-form-item">
+            <label class="layui-form-label">工号</label>
+            <div class="layui-input-block">
+                <input type="text" name="teacherno"  autocomplete="off" class="layui-input" placeholder="1998xxxxxxxx" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name"  autocomplete="off" class="layui-input" placeholder="张三" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password"  autocomplete="off" class="layui-input"  placeholder="xxxxxxx">
+            </div>
+        </div>
+
+        <p  id="hint"  style="color: red" align="center"></p>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button  class="layui-btn" lay-submit lay-filter="formDemo" >添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="larry-personal-body clearfix">
+        <!--            UI填充造成视觉的效果！-->
+    </div>
+            <div class="larry-personal-body clearfix">
+                <table class="layui-hide"  id="demo" lay-filter="demo"></table>
+            </div>
+</div>
+</body>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+    layui.use(['upload','form'], function() {
+        var form = layui.form
+            , layer = layui.layer;
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify("正在添加"));
+            var myform = document.getElementById("addteacher");
+            var formdate = new FormData(myform);
+            // console.log(formdate);
+
+            $.ajax({
+                url: "addteacher",
+                type: "POST",
+                data: formdate,
+                contentType: false,       //一定要写
+                processData: false,       //一定要写
+                traditional: true,//这里设置为true
+                success: function(data) {
+                    //do sth...
+                    layer.msg(JSON.stringify(data));
+                    console.log(data);
+                    //alert(data);
+                }
+
+            });
+            return false;
+        });
+        function showstudent() {
+            var lesson = $("#lesson").val();
+            console.log(lesson);
+            layui.use('table', function () {
+                var table = layui.table;//高版本建议把括号去掉，有的低版本，需要加()
+                table.render({
+                    elem: '#demo'
+                    , url: 'getallteacher' //数据接口
+
+                    // , page: false //开启分页
+                    , toolbar: '#toolbarDemo'
+                    , title: name
+                    , cols: [[ //表头
+                        {field: 'teacherno', title: '教工号', sort: true, fixed: 'left'}
+                        , {field: 'name', title: '姓名'}
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
+                    ]]
+                })
+                table.on('tool(demo)', function(obj){
+                    var data = obj.data;
+                    if(obj.event === 'del'){
+                        layer.confirm('真的删除行么', function(index){
+                            $.ajax({
+                                url:'deleteteacher',
+                                data: {
+                                    'teacherno':data.teacherno
+                                },
+                                method:'POST',
+                                traditional: true,
+                                success:function (msg) {
+                                    layer.msg(msg);
+                                    obj.del();
+                                },
+                                error:function (msg) {
+                                    layer.msg(msg)
+                                }
+
+
+
+                            });
+                            layer.close(index);
+                        });
+                    } else if(obj.event === 'edit'){
+                        layer.msg(JSON.stringify("待开发"))
+                    }
+                });
+            });
+        }
+        showstudent();
+    })
+
+</script>
+</html>

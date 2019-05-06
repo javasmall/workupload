@@ -48,6 +48,7 @@
         <div class="layui-upload">
             <label id="lb"></label><br><!-- 展示文字名称-->
             <button class="layui-btn" lay-submit lay-filter="formDemo">下载实验报告</button>
+            <button class="layui-btn" lay-submit lay-filter="formDemo2">下载补交报告</button>
         </div>
 </form>
 
@@ -186,11 +187,32 @@
             , table = layui.table
             ,laydate = layui.laydate;
 
+        form.on('submit(formDemo2)', function(data){
+            console.log(data);
+            layer.msg(JSON.stringify("补交报告，请稍后"));
+            var url = "../downloadovertime";
+
+            var form = $("<form></form>").attr("action", url).attr("method", "post");
+            form.append($("<input></input>").attr("type", "hidden").attr("name", "lesson").attr("value", data.field.lesson));
+            form.append($("<input></input>").attr("type", "hidden").attr("name", "job").attr("value", data.field.job));
+            form.appendTo('body').submit().remove();
+            // $.ajax({
+            //     url: "../downloadovertime",
+            //     type: "post",
+            //     data: data.field,
+            //     // traditional: true,//这里设置为true
+            //     success: function(data) {
+            //         //do sth...
+            //        layer.msg(JSON.stringify(data));
+            //         console.log(data);
+            //         //alert(data);
+            //     }
+            // });
+            return false;
+        });
+
         form.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify("下载中，请稍后"));
-
-
-
             // $.ajax({
             //     url: "",
             //     type: "GET",

@@ -1,10 +1,8 @@
 package com.submit.service;
 
-import com.submit.dao.jobMapper;
-import com.submit.dao.studentclassMapper;
-import com.submit.dao.teachclassMapper;
-import com.submit.dao.teacherMapper;
+import com.submit.dao.*;
 import com.submit.pojo.job;
+import com.submit.pojo.student;
 import com.submit.pojo.teachclass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +21,8 @@ public class studentService {
     jobMapper jobMapper;
     @Autowired(required = false)
     studentclassMapper studentclassMapper;
+    @Autowired(required = false)
+    studentMapper studentMapper;
 
     public List<teachclass> getList(String studentid) {
         return teachclassMapper.getteacherclassbystuid(studentid);
@@ -61,6 +61,10 @@ public class studentService {
             }
         }
         return list1;
+    }
+
+    public List<student> getallstudent(String studentid, String name) {
+        return studentMapper.getallstudent(studentid,name);
     }
 }
 

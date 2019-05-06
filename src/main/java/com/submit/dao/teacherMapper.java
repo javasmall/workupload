@@ -2,6 +2,9 @@ package com.submit.dao;
 
 import com.submit.pojo.teacher;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface teacherMapper {
@@ -16,4 +19,7 @@ public interface teacherMapper {
     boolean updateByPrimaryKeySelective(teacher record);
 
     int updateByPrimaryKey(teacher record);
+
+    @Select("select * from teacher")
+    List<teacher> getAllTeacher();
 }

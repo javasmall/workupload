@@ -5,63 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-index3333
-<button onclick="click1()" value="button1" name="buttin">button1</button>
-<button onclick="click2()" value="button1" name="buttin">button2</button>
+权限不足，禁止访问
 
-<form action="http://localhost:8080/login" method="post" name="myform">
-    <input type="text" name="username" value="162210702234">
-    <input type="text" name="password" value="bigsai" >
-    <input type="submit" value="提交">
-</form>
-<form action="http://biggsai.com/volunteer/teacher/updateactivity" method="post" name="myform">
-    <input type="text" name="id" value="12">
-    <input type="text" name="work_hour" value="1.5" >
-    <input type="submit" value="提交">
-</form>
 </body>
-<script src="js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript">
-    function click1(){
-        $.ajax({
-            url: "http://biggsai.com/volunteer/teacher/updateactivity",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true // 这里设置了withCredentials
-            },
-            data: {
-                id:12,
-                work_hour:1.5
-            },
-            traditional: true,//这里设置为true
-            crossDomain:true,
-            success: function(data) {
-                //do sth...
-                console.log(data);
-                //alert(data);
-            }
-        });
-    }
-    function click2(){
-        var date=new FormData();
-        date.append("username","162210702234");
-        date.append("password","bigsai");
-        $.ajax({
-            url: "http://biggsai.com/volunteer/login",
-
-            type: "POST",
-            data: date,
-            contentType: false,       //一定要写
-            processData: false,       //一定要写
-            crossDomain:true,
-
-            traditional: true,//这里设置为true
-            success: function(data) {
-                //do sth...
-                console.log(data);
-                //alert(data);
-            }
-        });
-    }
-</script>
 </html>

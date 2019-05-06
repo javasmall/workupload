@@ -45,13 +45,11 @@ public class UserRealm extends AuthorizingRealm{
 		//到数据库查询当前登录用户的授权字符串
 		//获取当前登录用户
 		Subject subject = SecurityUtils.getSubject();
-//		User user = (User)subject.getPrincipal();
-//		User dbUser = userMapper.findById(user.getId());
-//        info.addStringPermission("user:add");
-//        info.addStringPermission("user:update");
-//		//info.addStringPermission("user:"+dbUser.getPerms());
-//		System.out.println("user:"+dbUser.getPerms());
 
+		if(((String)subject.getSession().getAttribute("role")).equals("teacher"))
+			info.addRole("teacher");
+		if(((String)subject.getSession().getAttribute("role")).equals("student"))
+			info.addRole("student");
 		return info;
 	}
 	/**

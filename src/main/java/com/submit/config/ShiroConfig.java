@@ -58,13 +58,14 @@ public class ShiroConfig {
 		//注意：当前授权拦截后，shiro会自动跳转到未授权页面
 //		filterMap.put("/add", "perm[user:add]");
 //		filterMap.put("/update", "perm[user:update]");
-//
+		filterMap.put("/teacher/**","roles[teacher]");
+		filterMap.put("/student/**","roles[student]");
 		filterMap.put("/**", "authc");//authc即为认证登陆后即可访问
 		
 		//修改调整的登录页面
 		shiroFilterFactoryBean.setLoginUrl("/index2.html");
 		//设置未授权提示页面
-		shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/index3.html");
 		
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 		
