@@ -1,9 +1,17 @@
-# workupload
+[项目github地址](https://github.com/javasmall/workupload)
+
+[作业收缴系统设计手册csdn地址](https://blog.csdn.net/qq_40693171/article/details/89891978)
 @[TOC](目录)
 # 系统介绍：
-**系统概述**：写了个作业收缴系统。系统旨在优化作业上交流程，解决收缴作业的繁琐过程，传统收缴作业基于qq文件，或者邮箱收发。需要大量的人工操作和精力取维护。而本系统将作业系统部署到服务器，大大方便了教师/收作业者对作业的管理。系统简单易用。能够满足大部分需求。项目开源地址将在最近给出。
+**系统概述**：写了个作业收缴系统。系统旨在优化作业上交流程，解决收缴作业的繁琐过程，传统收缴作业基于qq文件，或者邮箱收发。需要大量的人工操作和精力取维护。而本系统将作业系统部署到服务器，大大方便了教师/收作业者对作业的管理。系统简单易用。能够满足大部分需求。项目已开源，可以自己使用或者二次开发等等。欢迎star！！详细的设计文案将在最近给出。
 
 # 基本功能
+教师端登录地址：http://localhost:8080/loginteacher.html (数据库teacher表)
+学生端登录地址：http://localhost:8080/login.html  （数据库student表）
+数据库监控地址：http://localhost:8080/druid/login.html  （数据库账号密码）
+教师端和druid一览
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190506185412566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190506185453804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70)
 
 # 管理端
  ## 信息管理
