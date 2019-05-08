@@ -9,78 +9,7 @@
 </head>
 <body>
 <div style="padding: 40px; background-color: #F2F2F2;">
-    <div id="content_views" class="markdown_views prism-tomorrow-night-eighties">
-        <!-- flowchart 箭头图标 勿删 -->
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg>
-        <p><a href="https://github.com/javasmall/workupload" rel="nofollow" target="_blank">项目github地址</a></p>
-        <p><a href="https://blog.csdn.net/qq_40693171/article/details/89891978" rel="nofollow" target="_blank">作业收缴系统设计手册csdn地址</a><br>
-        </p><div class="toc"><h3><a name="t0"></a>目录</h3><ul><li><a href="#_4" rel="nofollow" target="_self">系统介绍：</a></li><li><a href="#_7" rel="nofollow" target="_self">基本功能</a></li><li><a href="#_15" rel="nofollow" target="_self">管理端</a></li><ul><li><a href="#_16" rel="nofollow" target="_self">信息管理</a></li><ul><ul><li><a href="#1__18" rel="nofollow" target="_self">1. 修改密码</a></li><li><a href="#2_excel_20" rel="nofollow" target="_self">2. 学生添加（支持excel格式的批量导入）</a></li><li><a href="#3_30" rel="nofollow" target="_self">3.学生管理：</a></li><li><a href="#4__37" rel="nofollow" target="_self">4. 教师的管理（增删）</a></li></ul></ul><li><a href="#_40" rel="nofollow" target="_self">课程管理</a></li><ul><ul><li><a href="#1___41" rel="nofollow" target="_self">1.  我的课程</a></li><li><a href="#2__43" rel="nofollow" target="_self">2. 课程添加</a></li><li><a href="#3__45" rel="nofollow" target="_self">3. 添加学生（课程）</a></li></ul></ul><li><a href="#_49" rel="nofollow" target="_self">作业管理</a></li><ul><ul><li><a href="#1__50" rel="nofollow" target="_self">1. 作业管理（增删改）</a></li><li><a href="#2__52" rel="nofollow" target="_self">2. 作业发布</a></li><li><a href="#3__55" rel="nofollow" target="_self">3. 作业查看（打印，下载压缩文件等）</a></li></ul></ul></ul><li><a href="#_59" rel="nofollow" target="_self">学生端</a></li></ul></div><p></p>
-        <h1><a name="t1"></a><a id="_4" target="_blank"></a>系统介绍：</h1>
-        <p><strong>系统概述</strong>：写了个作业收缴系统。系统旨在优化作业上交流程，解决收缴作业的繁琐过程，传统收缴作业基于qq文件，或者邮箱收发。需要大量的人工操作和精力取维护。而本系统将作业系统部署到服务器，大大方便了教师/收作业者对作业的管理。系统简单易用。能够满足大部分需求。项目已开源，可以自己使用或者二次开发等等。欢迎star！！详细的设计文案将在最近给出。</p>
-        <h1><a name="t2"></a><a id="_7" target="_blank"></a>基本功能</h1>
-        <p>教师端登录地址：<a href="http://localhost:8080/loginteacher.html" rel="nofollow" target="_blank">http://localhost:8080/loginteacher.html</a> (数据库teacher表)<br>
-            学生端登录地址：<a href="http://localhost:8080/login.html" rel="nofollow" target="_blank">http://localhost:8080/login.html</a>  （数据库student表）<br>
-            数据库监控地址：<a href="http://localhost:8080/druid/login.html" rel="nofollow" target="_blank">http://localhost:8080/druid/login.html</a>  （数据库账号密码）<br>
-            教师端和druid一览<br>
-            <img src="https://img-blog.csdnimg.cn/20190506185412566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-            <img src="https://img-blog.csdnimg.cn/20190506185453804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-        <h1><a name="t3"></a><a id="_15" target="_blank"></a>管理端</h1>
-        <h2><a name="t4"></a><a id="_16" target="_blank"></a>信息管理</h2>
-        <p>这块主要</p>
-        <h4><a id="1__18" target="_blank"></a>1. 修改密码</h4>
-        <p>可以直接输入旧密码和新密码进行修改</p>
-        <h4><a id="2_excel_20" target="_blank"></a>2. 学生添加（支持excel格式的批量导入）</h4>
-        <p>该项功能是往系统平台中添加学生。你可根据表单手打学生信息进行导入。有了学生信息后学生才能加入课程班号。</p>
-        <p>若使用excel的xls或xlsx格式进行导入，要遵从文件的相应格式，从第二行起，表格的前四列应遵从如下格式：</p>
 
-        <div class="table-box"><table>
-            <thead>
-            <tr>
-                <th align="center">学号</th>
-                <th align="left">姓名</th>
-                <th>拼音</th>
-                <th>密码</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td align="center">16221070</td>
-                <td align="left">张赛</td>
-                <td>zhang1sai4</td>
-                <td>162125</td>
-            </tr>
-            </tbody>
-        </table></div><p><img src="https://img-blog.csdnimg.cn/20190505170901530.png" alt="在这里插入图片描述"><br>
-        当既有excel文件又有表单数据时候，优先考虑excel数据。忽略表单添加。</p>
-        <h4><a id="3_30" target="_blank"></a>3.学生管理：</h4>
-        <p>此页面下可以对学生进行模糊搜索，搜索指定学生，指定学号范围、姓名的学生，针对表格的学生数据，可以<mark>直接进行点击编辑</mark>。学生除了学号外其他信息均可修改。<br>
-            <img src="https://img-blog.csdnimg.cn/20190505203917827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-            此外，页面还提供导出学生excel表的功能。将选定的可以导出成xls或者cvs文件。<br>
-            <img src="https://img-blog.csdnimg.cn/20190505204325582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-        <h4><a id="4__37" target="_blank"></a>4. 教师的管理（增删）</h4>
-        <p>这个模块只提供教师的增删功能。不提供修改功能。但是只有超级用户才能对教师账号的增删（程序拥有者数据库的level为0）；</p>
-        <h2><a name="t5"></a><a id="_40" target="_blank"></a>课程管理</h2>
-        <h4><a id="1___41" target="_blank"></a>1.  我的课程</h4>
-        <p>本页面提供查看、编辑和删除自己所有课程的功能，可以根据需求修改自己发布课程的相关信息。也可以看到加入课程的学生。</p>
-        <h4><a id="2__43" target="_blank"></a>2. 课程添加</h4>
-        <p>本页面也添加课程的界面。注意课时学分一栏的数据为数字类型。通过此页面即可将新课程发布到系统你的课程列表中。<mark>注意填写学期的格式</mark>，这个后台会根据此字段匹配是否为当前学期，否的话将在一些界面不展示。如果写错可到我的课程中进行修改！</p>
-        <h4><a id="3__45" target="_blank"></a>3. 添加学生（课程）</h4>
-        <p>本界面是课程添加学生操作的界面。因为学生和课程是两个独立题。<strong>本系统通过老师添加学生使得学生参加课程而不是学生自己选课</strong>。添加学生分为单个添加和批量添加。因为一个班级学生往往学号是有规律的递增，所有我们提供通过学号首尾，添加数据库中有该字段学号的学生进入课程。添加后将返回成功失败的条数。添加之后，对应学生会在提交作业的可选列表多出改作业。<br>
-            <img src="https://img-blog.csdnimg.cn/20190505211109201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-        <h2><a name="t6"></a><a id="_49" target="_blank"></a>作业管理</h2>
-        <h4><a id="1__50" target="_blank"></a>1. 作业管理（增删改）</h4>
-        <p>每一个课程下有若干实验或作业。学生提交的要有课程和作业两个选项。本页面提供编辑自己课程的作业（添加、修改，删除等功能）。注意的是你可编辑在当前学期的课程作业（防止使用太久课程太多障碍选项太多影响使用故屏蔽掉非本学期的课程）。</p>
-        <h4><a id="2__52" target="_blank"></a>2. 作业发布</h4>
-        <p>此界面提供发布作业的功能，注意一些数字类型的栏目。<br>
-            <img src="https://img-blog.csdnimg.cn/20190505211951235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-        <h4><a id="3__55" target="_blank"></a>3. 作业查看（打印，下载压缩文件等）</h4>
-        <p>本页面为核心功能。教师等收作业可通过本界面下资学生已经上传的实验的报告打包城的zip文件。还可以在线根据用户的实验进行在线评分和备注。最终可以保存成Excel文件到本地。<br>
-            <img src="https://img-blog.csdnimg.cn/2019050521332517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-        <h1><a name="t7"></a><a id="_59" target="_blank"></a>学生端</h1>
-        <p>因为学生不是主要服务对象，所有就给了几个需要的界面，学生可以根据已经添加的课程进行上传作业。主界面如下：<br>
-            <img src="https://img-blog.csdnimg.cn/20190505214227986.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-
-    </div>
 </div>
 </body>
 <script type="text/javascript" src="../layui/layui.js"></script>
