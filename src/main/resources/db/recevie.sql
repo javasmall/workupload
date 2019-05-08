@@ -1,20 +1,17 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 80011
+Source Server         : 本地
+Source Server Version : 50725
 Source Host           : localhost:3306
 Source Database       : recevie
-githubadress: https://github.com/javasmall/workupload
+
 Target Server Type    : MYSQL
-Target Server Version : 80011
+Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-05-06 17:22:00
+Date: 2019-05-08 10:34:59
 */
-CREATE DATABASE recevie;
-USE recevie;
-
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -55,7 +52,7 @@ CREATE TABLE `score` (
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `uniq_job` (`jobID`,`studentno`),
-  CONSTRAINT `fk_jobid` FOREIGN KEY (`jobID`) REFERENCES `job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_jobid` FOREIGN KEY (`jobID`) REFERENCES `job` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -126,16 +123,18 @@ CREATE TABLE `teachclass` (
   `teacherno` varchar(20) DEFAULT NULL,
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `uniclassno` (`teachclassno`,`coursesemester`)
+  UNIQUE KEY `uniclassno` (`teachclassno`,`coursesemester`),
+  KEY `teacherid` (`teacherno`),
+  CONSTRAINT `teacherid` FOREIGN KEY (`teacherno`) REFERENCES `teacher` (`teacherno`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of teachclass
 -- ----------------------------
-INSERT INTO `teachclass` VALUES ('19090173a-1', 'Android application development', '2018-2019-1', '3', '考试', '199800001483', '1');
-INSERT INTO `teachclass` VALUES ('19090177a-1', 'Web applications development using JSP & Servlet', '2018-2019-2', '4', '考试', '199800001483', '2');
-INSERT INTO `teachclass` VALUES ('19020183b-1', 'Java高级编程', '2018-2019-2', '3', '考查', '199800001483', '6');
-INSERT INTO `teachclass` VALUES ('19W07014b-1', '移动终端程序开发', '2018-2019-2', '3', '考查', '199800001483', '7');
+INSERT INTO `teachclass` VALUES ('19090173a-1', 'Android application development', '2018-2019-1', '3', '考试', '1998000011', '1');
+INSERT INTO `teachclass` VALUES ('19090177a-1', 'Web applications development using JSP & Servlet', '2018-2019-2', '4', '考试', '1998000011', '2');
+INSERT INTO `teachclass` VALUES ('19020183b-1', 'Java高级编程', '2018-2019-2', '3', '考查', '1998000011', '6');
+INSERT INTO `teachclass` VALUES ('19W07014b-1', '移动终端程序开发', '2018-2019-2', '3', '考查', '1998000011', '7');
 
 -- ----------------------------
 -- Table structure for teacher
@@ -153,7 +152,7 @@ CREATE TABLE `teacher` (
 -- Records of teacher
 -- ----------------------------
 INSERT INTO `teacher` VALUES ('123456', '张三', '123', '1');
-INSERT INTO `teacher` VALUES ('1998000014', '夏老师', '1998000014', '0');
+INSERT INTO `teacher` VALUES ('1998000011', '夏老师', '1998000014', '0');
 
 -- ----------------------------
 -- Table structure for timetable
