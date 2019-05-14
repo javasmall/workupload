@@ -5,15 +5,10 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.read.context.AnalysisContext;
 import com.alibaba.excel.read.event.AnalysisEventListener;
 import com.alibaba.excel.support.ExcelTypeEnum;
-import com.submit.dao.jobMapper;
-import com.submit.dao.scoreMapper;
-import com.submit.dao.teachclassMapper;
 import com.submit.pojo.job;
 import com.submit.pojo.score;
 import com.submit.pojo.student;
 import com.submit.pojo.teachclass;
-
-import com.submit.service.teacherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,13 +35,13 @@ public class fileController {
 
     private static final Logger logger = LoggerFactory.getLogger(fileController.class);
     @Autowired(required = false)
-    jobMapper jobMapper;
+    com.submit.dao.jobMapper jobMapper;
     @Autowired(required = false)
-    teachclassMapper teachclassMapper;
+    com.submit.dao.teachclassMapper teachclassMapper;
     @Autowired(required = false)
-    scoreMapper scoreMapper;
+    com.submit.dao.scoreMapper scoreMapper;
     @Autowired(required = false)
-    teacherService teacherService;
+    com.submit.service.teacherService teacherService;
 
     @ResponseBody
     @PostMapping("teacher/addstudent")
@@ -85,7 +79,7 @@ public class fileController {
                 excelReader.read(new Sheet(1, 1, student.class));
                 List<Object> list = listener.getDatas();
                 for (Object student : list) {
-                    student stu = (student) student;
+                    com.submit.pojo.student stu = (com.submit.pojo.student) student;
                     try {
                         teacherService.addstudentuser(stu);
                         success++;
@@ -162,7 +156,7 @@ public class fileController {
 
         if(score==null)
         {
-            score score1=new score();
+            com.submit.pojo.score score1=new score();
             score1.setJobid(job.getId());score1.setStudentno((String)session.getAttribute("studentid"));
             score1.setTime(new Date());
             scoreMapper.insert(score1);
@@ -191,7 +185,7 @@ public class fileController {
         else pat="fileget/"+lesson+"/"+job;
         String zipname="";
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lesson);
-        job job1=jobMapper.selectByPrimaryKey(job);
+        com.submit.pojo.job job1=jobMapper.selectByPrimaryKey(job);
         zipname+=teachclass.getCoursename();
         zipname+="实验"+job1.getNo()+job1.getTitle();
         zipname+=".zip";

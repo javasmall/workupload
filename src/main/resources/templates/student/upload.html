@@ -105,7 +105,6 @@
                 //do sth...
                 filldate(data)
             }
-
         });
     }
     getjobbyid();
@@ -128,13 +127,11 @@
                 processData: false,       //一定要写
                 traditional: true,//这里设置为true
                 success: function(data) {
-                    //do sth...
                    layer.msg(JSON.stringify(data));
                     console.log(data);
-                    //alert(data);
                 }
-
             });
+            return false;
             //执行实例
             // $.post("onfile",data.field,function(res){
             //     if(res.status){
@@ -145,7 +142,6 @@
             //         layer.msg(res.info, {time: 2000});
             //     }
             // },'json');
-            return false;
         });
         //日期
 
