@@ -36,6 +36,7 @@ public interface scoreMapper {
             "and b.jobID=#{jobid} " +
             "where a.classID =(SELECT teachclassid FROM job  WHERE ID=#{jobid}) " +
             "ORDER BY a.`no` asc)d,student e " +
-            "WHERE d.studentno=e.studentno")
+            "WHERE d.studentno=e.studentno " +
+            "order by d.no asc")
     List<Map> getscorebyjobid(int jobid);
 }
