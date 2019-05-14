@@ -185,11 +185,11 @@ public class fileController {
         else pat="fileget/"+lesson+"/"+job;
         String zipname="";
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lesson);
-        com.submit.pojo.job job1=jobMapper.selectByPrimaryKey(job);
+        job job1=jobMapper.selectByPrimaryKey(job);
         zipname+=teachclass.getCoursename();
         zipname+="实验"+job1.getNo()+job1.getTitle();
         zipname+=".zip";
-        String filename=request.getSession().getServletContext().getRealPath(pat);//专门创建一个fileget文件夹存取内容
+        String filename=request.getSession().getServletContext().getRealPath(pat);//存取内容
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session=request.getSession();
@@ -230,7 +230,7 @@ public class fileController {
         {
             InputStream input;
             BufferedInputStream buff;
-            zipout.putNextEntry(new ZipEntry(addpath+file.getName()));
+            zipout.putNextEntry(new ZipEntry(addpath));
             input=new FileInputStream(file);
             buff=new BufferedInputStream(input);
             byte b[]=new byte[1024*5];
