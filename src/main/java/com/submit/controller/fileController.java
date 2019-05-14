@@ -48,10 +48,10 @@ public class fileController {
     public String teacheraddstudent(MultipartFile file, String name, String pinyin, String password, String studentno) throws IOException {
 
         logger.info(studentno + " " + name + " " + password + " " + pinyin);
-        logger.info(file.getOriginalFilename());
+        //logger.info(file.getOriginalFilename());
         InputStream inputStream=null;
         int success=0;int fail=0;
-        if(file==null)
+        if(file==null||file.isEmpty())
         {
             try {
             student student=new student();
