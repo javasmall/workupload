@@ -114,7 +114,7 @@ public class fileController {
         boolean isovertime=false;
 
         HttpSession session=request.getSession();
-        if(file==null||!file.getOriginalFilename().contains("doc")){return "请选择正确文件";}
+        if(file.isEmpty()||file==null||!file.getOriginalFilename().contains("doc")){return "请选择正确文件";}
 
         job job=jobMapper.selectByPrimaryKey(jobid);
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lessonid);
@@ -156,7 +156,7 @@ public class fileController {
 
         if(score==null)
         {
-            com.submit.pojo.score score1=new score();
+            score score1=new score();
             score1.setJobid(job.getId());score1.setStudentno((String)session.getAttribute("studentid"));
             score1.setTime(new Date());
             scoreMapper.insert(score1);

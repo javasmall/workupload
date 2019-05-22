@@ -95,6 +95,7 @@ public class DruidConfig {
         return datasource;
     }
 
+    //用数据库的账号密码登录
     @Bean
     public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean reg = new ServletRegistrationBean();

@@ -98,6 +98,9 @@ controller层分了几个controller，比如文件处理一个，登录授权一
  将两个被注释的还原![在这里插入图片描述](https://img-blog.csdnimg.cn/20190507092807813.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70)
  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190507111114688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70)
  然后再target目录下找到war包，修改成你要的项目名，用ssh、scp等工具指令放到tomcat指定目录下。就可以访问了。
+
  教师端登录地址：http://localhost:8080/loginteacher.html (数据库teacher表)
+ 
 学生端登录地址：http://localhost:8080/login.html （数据库student表）
+
 数据库监控地址：http://localhost:8080/druid/login.html （数据库账号密码）
