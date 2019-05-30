@@ -114,7 +114,7 @@ public class fileController {
         boolean isovertime=false;
 
         HttpSession session=request.getSession();
-        if(file.isEmpty()||file==null||!file.getOriginalFilename().contains("doc")){return "请选择正确文件";}
+        if(file.isEmpty()||file==null){return "请选择正确文件";}
 
         job job=jobMapper.selectByPrimaryKey(jobid);
         teachclass teachclass=teachclassMapper.selectByPrimaryKey(lessonid);
