@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>提交管理</title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" media="all">
+</head>
+
+<body>
+<div style="padding: 20px; background-color: #F2F2F2;height: 80%">
+    <div class="layui-row  singleSub" style="margin-left: auto;margin-right: auto;">
+        <div class="layui-card">
+            <!--之后可以通过再次添加form表单，来实现"上传记录"的筛选-->
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+                <legend>实验报告上传记录</legend>
+            </fieldset>
+
+            <table id="demo" lay-filter="test"></table>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 312
+            ,url: '../getscoreupload' //数据接口
+            ,page: false //开启分页
+            ,cols: [[ //表头
+                {field: 'studentno', title: '学号', width:200, sort: true, fixed: 'left'}
+                ,{field: 'coursename', title: '学科', width:200,}
+                ,{field: 'title', title: '实验名称', width:250, }
+                ,{field: 'time', title: '上传时间', width:200}
+                ,{field: 'status', title: '提交状态', width: 200,templet:function (d) {
+                        return '<span style="color: #c00;">'+ d.title +'</span>已经提交'
+                    }}
+            ]]
+            ,data: [{
+            "id": "162210201321"
+            ,"subjectName": "web appliaction with servlet"
+            ,"experimentName": "实验一"
+            ,"time": "2019-04-20"
+            ,"status": "已经提交"
+        }, {
+                "id": "162210201321"
+                ,"subjectName": "web appliaction with servlet"
+                ,"experimentName": "实验三"
+                ,"time": "2019-05-08"
+                ,"status": "已经提交"
+        }],
+    });
+
+    });
+</script>
+
+    </body>
+</html>

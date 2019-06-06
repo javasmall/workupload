@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" media="all">
+</head>
+
+
+<body >
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>实验任务查看</legend>
+</fieldset>
+
+<div class="layui-collapse  layui-col-md9" lay-accordion="" style="text-align: center" id="textva">
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">实验一</h2>
+        <div class="layui-colla-content layui-show">
+            <p><b>实验目的</b>:创建一个雇员信息管理系统
+                <br>
+                <b>实验内容</b>:创建一个接受雇员信息的HTML页面，该页面用于接受雇员姓名、姓氏、地址及部门的文本字段。该输入数据转发给servlet，由servlet插入到数据库表中。此外，servlet应在浏览器上以表格形式显示所有雇员的相关数据。</p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">实验二</h2>
+        <div class="layui-colla-content">
+            <p><b>实验目的</b>:创建一个servlet一个应用程序，以便用户玩一个猜数字的游戏。
+                <br>
+                <b>实验内容</b>:创建一个接受一位数和用户姓名的用户界面。还需要创建一个servlet从用户界面获取用户名并保存在会话中。之后，servelt获取用户指定的数字，将数字转化为Integer对象，并将该对象保存在request对象中。最后，servlet将request对象发送给servlet2中，如果抛出异常，将请求转发给错误页面。Servelt2Baohan用户指定的数字与随机生成的数字进行比较的逻辑，servlet应显示猜数游戏的结果和用户名.</p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">实验三</h2>
+        <div class="layui-colla-content">
+            <p><b>实验目的</b>:实现一个简单的站内短信系统。
+                <br><b>实验内容</b>:在此站内短信系统中，用户登录后可以向其他用户发送消息，当其他用户登陆时，将会看到这个消息。
+                用户在登陆界面进行登陆之后，在邮箱主界面将显示用户的”收件箱”中的邮件信息，在左侧操作栏，有多种功能进行选择，相关的邮箱的功能有”写邮件”，“草稿箱”，“消息通知”，”用户设置”，“退出登录”等操作。</p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">实验四</h2>
+        <div class="layui-colla-content">
+            <p>老师暂未公布实验信息!</p>
+        </div>
+    </div>
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">考试通知</h2>
+        <div class="layui-colla-content">
+            <br>本门课程的考试将于<b>6月27日 上午9点</b> 在<b>教3-205教室</b>考试，请同学们提前复习，做好考试准备! </p>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "../gettaskdetail",
+            dataType: "json",
+            success: function(data){
+                $('#resText').empty();   //清空resText里面的所有内容
+
+                var html = '';
+
+                $.each(data, function(commentIndex, comment){
+
+                    html += '<div class="layui-colla-item">' +
+                        '        <h2 class="layui-colla-title">'+comment['coursename']+'实验'+comment['no']+comment['title']+'</h2>' +
+                        '        <div class="layui-colla-content">' +
+                        '            <p><b>创建时间：</b>'+comment['time'] +
+                        '</p><p><b>预期截至日期:</b>'+comment['duedate']+'</p><p>'+
+                        '                <br><b>实验内容:</b>'+comment['note']+'</p>' +
+                        '        </div>\n' +
+                        '    </div>'
+
+                });
+
+                $('#textva').html(html);
+                layui.use('element', function(){
+                    var element = layui.element;
+
+                    //…
+                });
+
+            }
+
+        });
+    })
+
+</script>
+</html>

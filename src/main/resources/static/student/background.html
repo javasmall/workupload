@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>系统设置</title>
+
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" media="all">
+</head>
+    <!--系统背景设置-->
+
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+
+
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+            <span>系统背景相关设置</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+
+        <div class="larry-personal-body clearfix">
+            <form class="layui-form" action="" lay-filter="example">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">系统背景颜色选择:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="color" value="黑色" title="黑色" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>黑色</span></div>
+                        <input type="radio" name="color" value="蓝色" title="蓝色"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>蓝色</span></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">允许显示个性签名(默认是开):</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">接收系统每日推送内容:</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="like[programe]" title="Java编程">
+                        <input type="checkbox" name="like[life]" title="编程人生">
+                        <input type="checkbox" name="like[way]" title="技术路线">
+                        <input type="checkbox" name="like[game]" title="游戏" checked="">
+                        <input type="checkbox" name="like[joke]" title="段子">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开启消息提醒(默认是开):</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked="" name="message" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+
+        //表单初始赋值
+        form.val('example', {
+            "color": "蓝色",
+            "open": true //开关状态
+            ,"message":true
+            ,"like[programe]": true //复选框选中状态
+        })
+    });
+    </script>
+</body>
+</html>

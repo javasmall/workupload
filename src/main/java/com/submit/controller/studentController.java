@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class studentController {
@@ -75,6 +77,28 @@ public class studentController {
             e.printStackTrace();;
             return "插入失败";
         }
+    }
+
+    @ResponseBody
+    @GetMapping("getscoreupload")
+    public Map<String, Object> getscoreupload(HttpServletRequest request)
+    {
+        String studentid=(String) request.getSession().getAttribute("studentid");
+        List<Map<String,String>>list=studentService.getscoreupload(studentid);
+        Map<String,Object>map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","success");
+        map.put("data",list);
+        map.put("count",list.size());
+        return map;
+    }
+    //获取实验信息
+    @ResponseBody
+    @GetMapping("gettaskdetail")
+    public List<Map<String,Object>>gettaskdetail(HttpServletRequest request)
+    {
+        String studentid=(String) request.getSession().getAttribute("studentid");
+        return studentService.gettaskdetail(studentid);
     }
 
 

@@ -11,6 +11,18 @@ import java.util.Map;
 
 @Mapper
 public interface scoreMapper {
+
+    @Select("SELECT d.studentno,d.score,d.`name` ,DATE_FORMAT(d.time,'%Y-%m-%d %h:%m:%s') as time,f.coursename,e.title FROM teachclass f, " +
+            "(SELECT a.studentno,a.jobID,a.time,IFNULL(a.score,0) as score,b.`name` FROM score a " +
+            "LEFT JOIN student b " +
+            "on a.studentno=b.studentno " +
+            "where a.studentno=#{studentid})d " +
+            "LEFT JOIN job e " +
+            "on d.jobID=e.ID " +
+            "WHERE e.teachclassid=f.ID " +
+            "ORDER BY e.ID DESC")
+    List<Map<String,String>> getscoreupload(String studentid) ;
+
     int deleteByPrimaryKey(Long id);
 
     int insert(score record);

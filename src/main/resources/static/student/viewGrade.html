@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程了解</title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" media="all">
+</head>
+
+        <!--实验成绩展示-->
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <blockquote class="layui-elem-quote layui-text">
+            <!--<header class="larry-personal-tit">-->
+            <span>实验成绩</span>
+            <!--</header>&lt;!&ndash; /header &ndash;&gt;-->
+        </blockquote>
+        <header class="larry-personal-tit">
+            ps：0分说明老师还未批阅哦
+        </header><!-- /header -->
+
+        <div class="larry-personal-body clearfix">
+            <table class="layui-table" id="demo" lay-filter="test"></table>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#demo'
+            ,height: 312
+            ,url: '../getscoreupload' //数据接口
+            ,page: false//开启分页
+            ,cols: [[ //表头
+                {field: 'name', title: '姓名', width:220, sort: true, fixed: 'left'}
+                ,{field: 'studentno', title: '学号'}
+                ,{field: 'coursename', title: '学科'}
+                ,{field: 'title', title: '实验名称' }
+                ,{field: 'score', title: '得分'}
+            ]]
+            ,data: [{
+                "name": "史经犇"
+                ,"subjectName": "web appliaction with servlet"
+                ,"experimentName": "实验一"
+                ,"grade": "88"
+            }, {
+                "name": "史经犇"
+                ,"subjectName": "web appliaction with servlet"
+                ,"experimentName": "实验二"
+                ,"grade": "90"
+            }],
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -23,6 +23,8 @@ public class studentService {
     studentclassMapper studentclassMapper;
     @Autowired(required = false)
     studentMapper studentMapper;
+    @Autowired(required = false)
+    scoreMapper scoreMapper;
 
     public List<teachclass> getList(String studentid) {
         return teachclassMapper.getteacherclassbystuid(studentid);
@@ -65,6 +67,15 @@ public class studentService {
 
     public List<student> getallstudent(String studentid, String name) {
         return studentMapper.getallstudent(studentid,name);
+    }
+
+    public List<Map<String,String>> getscoreupload(String studentid) {
+        List<Map<String,String>>list=  scoreMapper.getscoreupload(studentid);
+        return list;
+    }
+
+    public List<Map<String, Object>> gettaskdetail(String studentid) {
+        return jobMapper.gettaskdetail(studentid);
     }
 }
 
