@@ -2,13 +2,15 @@
 
 [项目github地址，欢迎star！💗](https://github.com/javasmall/workupload)
 
+[项目码云地址，欢迎star！💗](https://gitee.com/bigsai/workupload)
+
 [作业收缴系统使用手册csdn地址](https://blog.csdn.net/qq_40693171/article/details/89850715)
 
 如果阅读源码学习或者使用又遇到问题可以联系作者！
 
 作者微信公众号(可以关注一波)：bigsai
 
-<img src="https://img-blog.csdnimg.cn/20190402171442251.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" width="50%" height="50%">
+<img src="https://img-blog.csdnimg.cn/20190402171442251.jpg" width="50%" height="50%">
 
 
 # 项目介绍

@@ -1,5 +1,10 @@
 [项目github地址](https://github.com/javasmall/workupload)
 
+[项目码云地址，欢迎star！💗](https://gitee.com/bigsai/workupload)
+
+微信公众号（持续分享）：bigsai
+
+<img src="https://img-blog.csdnimg.cn/20190402171442251.jpg" width="50%" height="50%">
 [作业收缴系统设计手册csdn地址](https://blog.csdn.net/qq_40693171/article/details/89891978)
 @[TOC](目录)
 # 系统介绍：

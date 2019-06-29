@@ -1,12 +1,13 @@
 [项目github地址，欢迎star！💗](https://github.com/javasmall/workupload)
 
+[项目码云地址，欢迎star！💗](https://gitee.com/bigsai/workupload)
+
 [作业收缴系统使用手册csdn地址](https://blog.csdn.net/qq_40693171/article/details/89850715)
 
 
 作者微信公众号(可以关注一波,持续分享)：bigsai
 
-<img src="https://img-blog.csdnimg.cn/20190402171442251.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjkzMTcx,size_16,color_FFFFFF,t_70" width="50%" height="50%">
-
+<img src="https://img-blog.csdnimg.cn/20190402171442251.jpg" width="50%" height="50%">
 # 项目介绍
 系统旨在优化作业上交流程，解决收缴作业的繁琐过程，传统收缴作业基于qq文件，或者邮箱收发。需要大量的人工操作和精力取维护。而本系统将作业系统部署到服务器，大大方便了教师/收作业者对作业的管理。系统精美简单易用。能够满足大部分需求。项目已开源，可以自己使用或者二次开发等等。**欢迎star**😭！！
 
