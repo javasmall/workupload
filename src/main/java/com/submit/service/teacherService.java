@@ -117,16 +117,22 @@ public class teacherService {
         List<teachclass>list=teachclassMapper.getteacherclassbyteachid(teacherid);
         Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
+        int month = c.get(Calendar.MONTH)+1;
         List<teachclass> list1 = new ArrayList<>();
         for(teachclass te:list)
         {
             String date=te.getCoursesemester();
             String dayear = date.substring(0, 4);
             String xueqi = date.substring(10, 11);
-            if ((Integer.parseInt(xueqi) == 2 && month < 8 && Integer.parseInt(dayear) == year - 1) || (Integer.parseInt(xueqi) == 2 && month > 8 && Integer.parseInt(dayear) == year)) {
+            logger.info(te.getCoursesemester()+" "+date+" "+dayear+" "+month+" "+xueqi+" "+year);
+            if ((Integer.parseInt(xueqi) == 2 && month < 8 && Integer.parseInt(dayear) == year - 1) ) {
                 list1.add(te);
                 logger.info(dayear + "  " + xueqi);
+            }
+            else if((Integer.parseInt(xueqi) == 1 && month > 8 && Integer.parseInt(dayear) == year))
+            {
+                list1.add(te);
+                logger.info(dayear + " 555 " + xueqi);
             }
         }
         return list1;
