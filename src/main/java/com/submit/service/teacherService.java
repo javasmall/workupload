@@ -129,7 +129,7 @@ public class teacherService {
                 list1.add(te);
                 logger.info(dayear + "  " + xueqi);
             }
-            else if((Integer.parseInt(xueqi) == 1 && month > 8 && Integer.parseInt(dayear) == year))
+            else if((Integer.parseInt(xueqi) == 1 && month >= 8 && Integer.parseInt(dayear) == year))
             {
                 list1.add(te);
                 logger.info(dayear + " 555 " + xueqi);
