@@ -34,7 +34,7 @@ public interface jobMapper {
             "c.coursename FROM job b ,teachclass c " +
             "WHERE b.teachclassid in " +
             "(SELECT a.classID FROM studentclass a " +
-            "WHERE a.studentno=162210702234) " +
+            "WHERE a.studentno=#{studentid}) " +
             "AND c.ID=b.teachclassid " +
             "ORDER BY b.ID DESC")
     List<Map<String, Object>> gettaskdetail(String studentid);
